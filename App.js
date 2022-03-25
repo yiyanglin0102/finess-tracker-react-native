@@ -1,9 +1,9 @@
 import 'react-native-gesture-handler';
 import React from "react";
 
-import LoginView from "./LoginView";
-import SignupView from "./SignupView";
-import ProfileView from "./ProfileView";
+import Login from "./Login";
+import SignUp from "./SignUp";
+import Profile from "./Profile";
 import ExercisesView from "./ExercisesView";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -43,19 +43,19 @@ class App extends React.Component {
           <Stack.Screen name="Login">
             {/* This is how you pass props (e.g. setAccessToken) to another component */}
             {(props) => (
-              <LoginView {...props} setAccessToken={this.accessToken} />
+              <Login {...props} setAccessToken={this.accessToken} />
             )}
           </Stack.Screen>
 
           {/* If you do not need to pass props, you can pass a component as a `component` prop to Screens like below */}
-          <Stack.Screen name="SignUp" component={SignupView} />
-
+          {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
+          <Stack.Screen name="SignUp" component={SignUp} />
           {/* We can also nest another navigator (e.g. Bottom Tabs, Drawer, etc.) inside a stack navigator.
               See https://reactnavigation.org/docs/nesting-navigators on how to nest navigators.
             */}
-          <Stack.Screen name="Profile">
-            {(props) => <ProfileView {...props} />}
-          </Stack.Screen>
+            <Stack.Screen name="Profile" component={Profile}>
+              {/* {(props) => <Profile {...props} />} */}
+            </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     );
