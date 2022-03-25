@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-class ExercisesView extends React.Component {
+class Exercises extends React.Component {
   render() {
     return (
       <View>
@@ -11,4 +11,4 @@ class ExercisesView extends React.Component {
   }
 }
 
-export default ExercisesView;
+export default Exercises;

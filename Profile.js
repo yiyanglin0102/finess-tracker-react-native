@@ -64,6 +64,10 @@ class Profile extends React.Component {
           title="Delete"
           onPress={() => this.deleteProfile()}
         />
+        <Button
+          title="Log out"
+          onPress={() => this.props.navigation.navigate('Login')}
+        />
       </View>
     );
   }

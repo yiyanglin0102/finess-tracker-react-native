@@ -50,7 +50,6 @@ class SignupView extends React.Component {
             placeholderColor="#c4c3cb"
             // secureTextEntry={true}
             value={"password"}// lazy to type
-
           // onChangeText={(text) => {this.handlePassword(text)}}
           />
           <Button
@@ -58,8 +57,9 @@ class SignupView extends React.Component {
             buttonStyle={{ height: 40, width: 120, fontSize: 40, alignSelf: 'center', alignItems: 'center', backgroundColor: '#aaaaaa', marginTop: 14, marginLeft: 6, justifyContent: 'center', borderRadius: 10 }}
             text={'Sign Up'}
             textStyle={{ color: "#4d4a43", fontSize: 19, fontWeight: 'bold' }}
-            onPress={() => this.SignUp()}
+            onPress={() => { this.SignUp() }}
           />
+          <Button title="Hello" onPress={() => {  }} />
         </View>
       </View>
     );

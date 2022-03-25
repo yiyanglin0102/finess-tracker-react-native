@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import base64 from "base-64"; // Use this library to encode `username:password` to base64
 
+
 class Login extends React.Component {
   // Use Basic access authentication (https://en.wikipedia.org/wiki/Basic_access_authentication) to authenticate the user.
   // React Native 1 lecture covered a good example of how to do this.
@@ -99,7 +100,7 @@ class Login extends React.Component {
 
 
   };
- 
+
 
 
   render() {
@@ -124,24 +125,20 @@ class Login extends React.Component {
             placeholder="Password"
             onChangeText={(text) => { this.handlePassword("password") }} // change "password" back to text
           />
-
-          {/* To navigate to another component, use this.props.navigation.navigate().
-            See https://reactnavigation.org/docs/navigating for more details.
-          */}
           <View style={{ flexDirection: 'row' }}>
             <Button
               title="logIn"
-              onPress={() => {this.logIn(); this.profile(); this.props.navigation.navigate('Profile')}}
+              onPress={() => {
+                // this.logIn(); this.profile(); 
+                this.props.navigation.navigate('Home')
+              }}
             />
-           
             <Button
               title="Sign Up"
               onPress={() => this.props.navigation.navigate('SignUp')}
             />
-           
           </View>
         </View>
-
       </View>
     );
   }
