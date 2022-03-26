@@ -5,6 +5,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import Profile from "./Profile";
 import Exercises from "./Exercises";
+import Test from "./Test";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,9 +16,9 @@ const Stack = createStackNavigator(); // Stack Navigator (https://reactnavigatio
 // const Drawer = createDrawerNavigator(); // Drawer Navigator (https://reactnavigation.org/docs/drawer-navigator)
 const Tab = createBottomTabNavigator(); // Bottom Tabs Navigator (https://reactnavigation.org/docs/tab-based-navigation)
 
-function CreateBottomTabNavigator() {
+function Home() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="Profile"
         component={Profile}
@@ -30,14 +31,16 @@ function CreateBottomTabNavigator() {
   );
 }
 
-function CreateStackNavigator() {
+function StackNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login}>
       </Stack.Screen>
       <Stack.Screen name="SignUp" component={SignUp}>
       </Stack.Screen>
-      <Stack.Screen name="Home" component={CreateBottomTabNavigator}>
+      <Stack.Screen name="Home" component={Home}>
+      </Stack.Screen>
+      <Stack.Screen name="Test" component={Test}>
       </Stack.Screen>
     </Stack.Navigator>
   );
@@ -60,7 +63,7 @@ class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <CreateStackNavigator />
+        <StackNavigator />
       </NavigationContainer>
     );
   }

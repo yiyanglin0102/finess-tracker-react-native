@@ -43,7 +43,7 @@ class Login extends React.Component {
 
     myHeaders.set("x-access-token", reponse.token);
     requestOptions.headers = myHeaders;
- 
+
     try {
       let response2 = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.username, requestOptions)
       let res = await response2.text();
@@ -97,14 +97,30 @@ class Login extends React.Component {
                   console.log(this.state.showProfile);
                   if (this.state.showProfile) {
                     this.profile();
-                    this.props.navigation.replace('Home')
+
+                    this.props.navigation.navigate('Home', {
+                      screen: 'Profile',
+                      params: {
+                        user: 123,
+                      }
+                    })
                   }
                 });
               }}
             />
             <Button
               title="Sign Up"
-              onPress={() => this.props.navigation.navigate('SignUp')}
+              onPress={() => this.props.navigation.navigate('SignUp', {
+                itemId: 86,
+                otherParam: 'anything you want here',
+              })}
+            />
+            <Button
+              title="Test"
+              onPress={() => this.props.navigation.navigate('Test', {
+                itemId: 86,
+                otherParam: 'anything you want here',
+              })}
             />
           </View>
         </View>

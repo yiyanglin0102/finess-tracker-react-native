@@ -2,6 +2,18 @@ import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 
 class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+      errorMessage: "",
+      showProfile: false,
+      accesscode: "",
+      userProfile: "",
+    }
+  }
+
   async deleteProfile() {
     var myDeleteHeaders = new Headers();
     myDeleteHeaders.append("Content-Type", "application/json");
@@ -37,7 +49,8 @@ class Profile extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>About Me</Text>
+       <Text>My name~~~: {JSON.stringify(this.props.route.params.user)}</Text>
+        <Text style={styles.title}>About Me:</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Personal Information</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>First Name</Text>
         <TextInput style={styles.input} placeholder="Enter First Name" />

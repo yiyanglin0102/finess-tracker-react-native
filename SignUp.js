@@ -58,6 +58,13 @@ class SignupView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+
+      
+      <Text>itemId: {JSON.stringify(this.props.route.params.itemId)}</Text>
+        <Text>otherParam: {JSON.stringify(this.props.route.params.otherParam)}</Text>
+
+
+
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Create with Username and Password</Text>
           <TextInput
