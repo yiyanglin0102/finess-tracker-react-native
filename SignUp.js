@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import base64 from "base-64";
 
 class SignupView extends React.Component {
@@ -11,6 +11,13 @@ class SignupView extends React.Component {
       errorMessage: "",
       showProfile: false
     }
+  }
+  handleUsername(text) {
+    this.setState({ username: text })
+  }
+
+  handlePassword(text) {
+    this.setState({ password: text })
   }
 
   async SignUp() {
@@ -29,8 +36,23 @@ class SignupView extends React.Component {
     };
 
     let response2 = await fetch('https://cs571.cs.wisc.edu/users', requestOptions)
-    console.log(await response2.text());
+    let msg = await response2.text();
+    console.log(msg);
+    this.setState({ errorMessage: JSON.parse(msg) });
   };
+
+  buttonAlert = () =>
+    Alert.alert(
+      "Warning",
+      this.state.errorMessage.message,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        }
+      ]
+    );
 
 
   render() {
@@ -40,26 +62,34 @@ class SignupView extends React.Component {
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Create with Username and Password</Text>
           <TextInput
             style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginTop: 20, marginBottom: 15, borderRadius: 5 }}
-            placeholder="Username"
             placeholderColor="#c4c3cb"
-          // onChangeText={(text) => {this.handleUsername(text)}}
+            placeholder="Username"
+            onChangeText={(text) => { this.handleUsername(text) }}
           />
           <TextInput
             style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginBottom: 15, borderRadius: 5 }}
             placeholder="Password"
             placeholderColor="#c4c3cb"
             // secureTextEntry={true}
-            value={"password"}// lazy to type
-          // onChangeText={(text) => {this.handlePassword(text)}}
+            onChangeText={(text) => { this.handlePassword(text) }}
           />
           <Button
-            title="Sign Up"
+            title="Create Account"
             buttonStyle={{ height: 40, width: 120, fontSize: 40, alignSelf: 'center', alignItems: 'center', backgroundColor: '#aaaaaa', marginTop: 14, marginLeft: 6, justifyContent: 'center', borderRadius: 10 }}
-            text={'Sign Up'}
+            text={'Create Account'}
             textStyle={{ color: "#4d4a43", fontSize: 19, fontWeight: 'bold' }}
-            onPress={() => { this.SignUp() }}
+            onPress={() => {
+              this.SignUp().then(() =>
+                this.buttonAlert())
+            }}
           />
-          <Button title="Hello" onPress={() => {  }} />
+          <Button
+            title="Cancel"
+            buttonStyle={{ height: 40, width: 120, fontSize: 40, alignSelf: 'center', alignItems: 'center', backgroundColor: '#aaaaaa', marginTop: 14, marginLeft: 6, justifyContent: 'center', borderRadius: 10 }}
+            text={'Cancel'}
+            textStyle={{ color: "#4d4a43", fontSize: 19, fontWeight: 'bold' }}
+            onPress={() => this.props.navigation.navigate('Login')}
+          />
         </View>
       </View>
     );

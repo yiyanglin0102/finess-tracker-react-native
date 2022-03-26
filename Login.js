@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, Alert, ScrollView } from "react-native";
 import base64 from "base-64"; // Use this library to encode `username:password` to base64
-
 
 class Login extends React.Component {
   // Use Basic access authentication (https://en.wikipedia.org/wiki/Basic_access_authentication) to authenticate the user.
@@ -15,6 +14,8 @@ class Login extends React.Component {
       errorMessage: "",
       showProfile: false,
       accesscode: "",
+      userProfile: "",
+      showProfile: false,
     }
   }
   handleUsername(text) {
@@ -28,7 +29,6 @@ class Login extends React.Component {
   async logIn() {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    // myHeaders.append("x-access-token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImJiYWRnZXI4MTciLCJleHAiOjE2NDgwODkwMzh9.NhSz6wQ-4VNhnAQEj1_ULTiDlqksoEfPCmYGdteMoOo");
     myHeaders.append("Authorization", 'Basic ' + base64.encode(this.state.username + ":" + this.state.password));
     console.log(myHeaders);
     var requestOptions = {
@@ -36,68 +36,31 @@ class Login extends React.Component {
       headers: myHeaders,
       redirect: 'follow'
     };
-    try {
 
-      let response = await fetch("https://cs571.cs.wisc.edu/login", requestOptions)
-      let reponse = await response.json();
-      if (!('message' in reponse)) {
-        this.setState({ showProfile: true })
-      } else {
-        Alert.alert("OOPS!", reponse.message);
-      }
-      this.setState({ accesscode: JSON.parse(JSON.stringify(reponse.token)) });
-      myHeaders.set("x-access-token", reponse.token);
-      requestOptions.headers = myHeaders;
-      this.setState({ errorMessage: reponse.message });
-    } catch (err) {
-      this.setState({ errorMessage: "Incorrect username and/or password" });
-    }
+    let response = await fetch("https://cs571.cs.wisc.edu/login", requestOptions)
+    let reponse = await response.json();
+    this.setState({ accesscode: reponse.token });
+
+    myHeaders.set("x-access-token", reponse.token);
+    requestOptions.headers = myHeaders;
+ 
     try {
       let response2 = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.username, requestOptions)
-      let reponse2 = await response2.json();
-      this.setState({ userProfile: reponse2 });
-      console.log(reponse2);
+      let res = await response2.text();
+      console.log(res);
+
+      this.setState({ userProfile: JSON.parse(res) });
+      if (!("Token is invalid!" === JSON.parse(res).message)) {
+        this.setState({ showProfile: true })
+      }
     } catch (err) {
-      this.setState({ errorMessage: "Incorrect username and/or password" });
+      // console.log(err);
     }
   };
 
-  async profile() {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("x-access-token", "");
-    myHeaders.append("Authorization", 'Basic ' + base64.encode(this.state.username + ":" + this.state.password));
-
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow',
-    };
-
-    let response = await fetch('https://cs571.cs.wisc.edu/login', requestOptions);
-    let reponse = await response.json();
-    console.log(reponse.token);
-
-    // console.log(JSON.parse(JSON.stringify(reponse.token)));
-    //   if (!('message' in reponse)) {
-    //     this.setState({ showProfile: true })
-    //   } else {
-    //     Alert.alert("OOPS!", reponse.message);
-    //   }
-    console.log("acessCode: " + JSON.parse(JSON.stringify(reponse.token)));
-    myHeaders.set("x-access-token", reponse.token);
-    requestOptions.headers = myHeaders;
-    //   this.setState({ errorMessage: reponse.message });
-    // } catch (err) {
-    //   this.setState({ errorMessage: "Incorrect username and/or password" });
-    // }
-    // try {
-    let response2 = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.username, requestOptions)
-    // .then(response => response.text())
-    // .then(result => console.log(result))
-    // .catch(error => console.log('error', error));
-    console.log(await response2.text());
-
+  profile() {
+    console.log(this.state.userProfile);
+    console.log(this.state.accesscode);
 
   };
 
@@ -105,7 +68,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.scrollView}>
         <Text
           style={{ color: "#C5050C", marginBottom: 20, fontWeight: 'bold', fontSize: 25 }}
         >
@@ -123,14 +86,20 @@ class Login extends React.Component {
           <TextInput style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginBottom: 15, borderRadius: 5 }}
             placeholderColor="#c4c3cb"
             placeholder="Password"
-            onChangeText={(text) => { this.handlePassword("password") }} // change "password" back to text
+            onChangeText={(text) => { this.handlePassword(text) }}
           />
           <View style={{ flexDirection: 'row' }}>
             <Button
               title="logIn"
               onPress={() => {
-                // this.logIn(); this.profile(); 
-                this.props.navigation.navigate('Home')
+                this.logIn().then(() => {
+
+                  console.log(this.state.showProfile);
+                  if (this.state.showProfile) {
+                    this.profile();
+                    this.props.navigation.replace('Home')
+                  }
+                });
               }}
             />
             <Button
@@ -139,10 +108,9 @@ class Login extends React.Component {
             />
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -154,6 +122,9 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     marginVertical: 10,
+  },
+  scrollView: {
+    marginHorizontal: 20,
   },
   input: {
     borderWidth: 1,

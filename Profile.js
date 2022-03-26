@@ -66,7 +66,9 @@ class Profile extends React.Component {
         />
         <Button
           title="Log out"
-          onPress={() => this.props.navigation.navigate('Login')}
+          onPress={() => {
+            this.props.navigation.replace('Login');
+          }}
         />
       </View>
     );

@@ -11,7 +11,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-// Review the navigators from React Native 2 lecture.
 const Stack = createStackNavigator(); // Stack Navigator (https://reactnavigation.org/docs/stack-navigator)
 // const Drawer = createDrawerNavigator(); // Drawer Navigator (https://reactnavigation.org/docs/drawer-navigator)
 const Tab = createBottomTabNavigator(); // Bottom Tabs Navigator (https://reactnavigation.org/docs/tab-based-navigation)
@@ -48,7 +47,6 @@ class App extends React.Component {
   constructor() {
     super();
 
-    // Feel free to add more states here
     this.state = {
       accessToken: undefined,
     };
