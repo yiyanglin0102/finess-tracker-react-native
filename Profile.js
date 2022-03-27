@@ -41,6 +41,10 @@ class Profile extends React.Component {
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("x-access-token", this.state.accesscode);
+    // myHeaders.append("mode", "no-cors"); Ask!!!!
+    // myHeaders.append("Access-Control-Allow-Origin", "*");
+
+
     var raw = JSON.stringify({
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -157,6 +161,18 @@ class Profile extends React.Component {
           title="Log out"
           onPress={() => {
             this.props.navigation.replace('Login');
+          }}
+        />
+        <Button
+          title="Exercises"
+          onPress={() => {
+            this.props.navigation.navigate('Home', {
+              screen: 'Exercises',
+              params: {
+                userProfile: this.state.userProfile,
+                accesscode: this.state.accesscode
+              }
+            })
           }}
         />
       </View>

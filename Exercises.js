@@ -1,25 +1,13 @@
 import React, { Component } from "react";
 import { Button, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
-
-const Item = ({ title, id }) => (
+const Item = ({ name, id, calories, date, duration }) => (
   <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-    <Text style={styles.textStyle}>{id}</Text>
+    <Text style={styles.title}>Name: {name}</Text>
+    <Text style={styles.title}>ID: {id}</Text>
+    <Text style={styles.title}>Calories: {calories}</Text>
+    <Text style={styles.title}>Duration: {duration}</Text>
+    <Text style={styles.title}>Date: {date}</Text>
   </View>
 );
 
@@ -30,12 +18,35 @@ class Exercises extends Component {
       username: "",
       password: "",
       errorMessage: "",
-      showProfile: false,
-      accesscode: "",
-      userProfile: "",
-      showProfile: false,
+      accesscode: this.props.route.params.accesscode,
+      userProfile: this.props.route.params.userProfile,
+      allActivities: [],
     }
   }
+  async allActivities() {
+    var myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("x-access-token", this.state.accesscode);
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    try {
+      let response = await fetch('https://cs571.cs.wisc.edu/activities', requestOptions)
+      let res = await response.text();
+      console.log(res);
+      let { activities } = JSON.parse(res);
+      this.setState({
+        allActivities: activities,
+      });
+
+    } catch (err) {
+      // console.log(err);
+    }
+  };
 
   state = {
     modalVisible: false
@@ -50,14 +61,23 @@ class Exercises extends Component {
     const renderItem = ({ item }) => (
       <Item title={item.title}
         id={item.id}
+        name={item.name}
+        calories={item.calories}
+        duration={item.duration}
+        date={item.date}
       />
     );
 
     return (
       <View style={styles.centeredView}>
+        <Text>My userProfile: {this.state.userProfile.firstName}</Text>
+        <Text>acessCode: {this.state.accesscode}</Text>
         <Button
           title="SAVE PROFILE"
-          onPress={() => { console.log("get from SERVER"); }}
+          onPress={() => {
+            this.allActivities();
+            console.log("get from SERVER");
+          }}
         />
         <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Exercises</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Let's get to work!</Text>
@@ -66,7 +86,7 @@ class Exercises extends Component {
 
         <View style={styles.container}>
           <FlatList
-            data={DATA}
+            data={this.state.allActivities}
             renderItem={renderItem}
             keyExtractor={item => item.id}
           />
@@ -178,9 +198,9 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
+    color: "black",
+    // fontWeight: "bold",
+    // textAlign: "center"
   },
   modalText: {
     marginBottom: 20,
