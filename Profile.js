@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, StatusBar } from "react-native";
 import base64 from "base-64";
 
 class Profile extends React.Component {
@@ -167,6 +167,7 @@ class Profile extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
     justifyContent: "center",
     marginHorizontal: 30,
   },
