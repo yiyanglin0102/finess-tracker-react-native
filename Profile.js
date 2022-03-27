@@ -10,6 +10,13 @@ class Profile extends React.Component {
       showProfile: false,
       accesscode: this.props.route.params.accesscode,
       userProfile: this.props.route.params.userProfile,
+      firstName: "",
+      lastName: "",
+      goalDailyCalories: "",
+      goalDailyProtein: "",
+      goalDailyCarbohydrates: "",
+      goalDailyFat: "",
+      goalDailyActivity: "",
     }
   }
 
@@ -35,8 +42,13 @@ class Profile extends React.Component {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("x-access-token", this.state.accesscode);
     var raw = JSON.stringify({
-      firstName: "bBucky",
-      lastName: "bBadger",
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      goalDailyCalories: this.state.goalDailyCalories,
+      goalDailyProtein: this.state.goalDailyProtein,
+      goalDailyCarbohydrates: this.state.goalDailyCarbohydrates,
+      goalDailyFat: this.state.goalDailyFat,
+      goalDailyActivity: this.state.goalDailyActivity,
     });
 
     var requestOptions = {
@@ -56,7 +68,7 @@ class Profile extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>My userProfile: {JSON.stringify(this.state.userProfile.firstName)}</Text>
+        <Text>My userProfile: {this.state.userProfile.firstName}</Text>
         <Text>acessCode: {this.state.accesscode}</Text>
 
 
@@ -66,29 +78,71 @@ class Profile extends React.Component {
 
         <TextInput style={styles.input}
           placeholder="Enter First Name"
-          defaultValue={JSON.stringify(this.state.userProfile.firstName)}
-          onChangeText={(text) => { this.setState({ firstName: text }) }} />
+          defaultValue={this.state.userProfile.firstName}
+          onChangeText={(text) => {
+            this.setState({ firstName: text });
+            let profileObject = this.state.userProfile;
+            profileObject.firstName = text;
+            this.setState({ userProfile: profileObject })
+          }} />
 
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Last Name</Text>
         <TextInput style={styles.input} placeholder="Enter Last Name"
-          defaultValue={JSON.stringify(this.state.userProfile.lastName)}
-          onChangeText={(text) => { this.setState({ lastName: text }) }} />
+          defaultValue={this.state.userProfile.lastName}
+          onChangeText={(text) => {
+            this.setState({ lastName: text });
+            let profileObject = this.state.userProfile;
+            profileObject.lastName = text;
+            this.setState({ userProfile: profileObject })
+          }} />
 
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Fitness Goal</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Daily Calories (kal)</Text>
-
         <TextInput style={styles.input}
           placeholder="Enter an input"
-          defaultValue={JSON.stringify(this.state.userProfile.goalDailyCalories)} />
-
+          defaultValue={JSON.stringify(this.state.userProfile.goalDailyCalories)}
+          onChangeText={(text) => {
+            this.setState({ goalDailyCalories: text });
+            let profileObject = this.state.userProfile;
+            profileObject.goalDailyCalories = text;
+            this.setState({ userProfile: profileObject })
+          }} />
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Daily Protein (grams)</Text>
-        <TextInput style={styles.input} placeholder="Enter an input" />
+        <TextInput style={styles.input} placeholder="Enter an input"
+          defaultValue={JSON.stringify(this.state.userProfile.goalDailyProtein)}
+          onChangeText={(text) => {
+            this.setState({ goalDailyProtein: text });
+            let profileObject = this.state.userProfile;
+            profileObject.goalDailyProtein = text;
+            this.setState({ userProfile: profileObject })
+          }} />
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Daily Carbs (grams)</Text>
-        <TextInput style={styles.input} placeholder="Enter an input" />
+        <TextInput style={styles.input} placeholder="Enter an input"
+          defaultValue={JSON.stringify(this.state.userProfile.goalDailyCarbohydrates)}
+          onChangeText={(text) => {
+            this.setState({ goalDailyCarbohydrates: text });
+            let profileObject = this.state.userProfile;
+            profileObject.goalDailyCarbohydrates = text;
+            this.setState({ userProfile: profileObject })
+          }} />
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Daily Fat (grams)</Text>
-        <TextInput style={styles.input} placeholder="Enter an input" />
+        <TextInput style={styles.input} placeholder="Enter an input"
+          defaultValue={JSON.stringify(this.state.userProfile.goalDailyFat)}
+          onChangeText={(text) => {
+            this.setState({ goalDailyFat: text });
+            let profileObject = this.state.userProfile;
+            profileObject.goalDailyFat = text;
+            this.setState({ userProfile: profileObject })
+          }} />
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Daily Activity (mins)</Text>
-        <TextInput style={styles.input} placeholder="Enter an input" />
+        <TextInput style={styles.input} placeholder="Enter an input"
+          defaultValue={JSON.stringify(this.state.userProfile.goalDailyActivity)}
+          onChangeText={(text) => {
+            this.setState({ goalDailyActivity: text });
+            let profileObject = this.state.userProfile;
+            profileObject.goalDailyActivity = text;
+            this.setState({ userProfile: profileObject })
+          }} />
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Looks good! All set?</Text>
 
         <Button
@@ -97,7 +151,7 @@ class Profile extends React.Component {
         />
         <Button
           title="Delete Profile"
-          onPress={() => { this.deleteProfile() }}
+          onPress={() => { this.deleteProfile(); this.props.navigation.pop(); }}
         />
         <Button
           title="Log out"
