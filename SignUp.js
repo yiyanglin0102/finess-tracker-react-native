@@ -60,8 +60,8 @@ class SignupView extends React.Component {
       <View style={styles.container}>
 
       
-      <Text>itemId: {JSON.stringify(this.props.route.params.itemId)}</Text>
-        <Text>otherParam: {JSON.stringify(this.props.route.params.otherParam)}</Text>
+      {/* <Text>itemId: {JSON.stringify(this.props.route.params.itemId)}</Text>
+        <Text>otherParam: {JSON.stringify(this.props.route.params.otherParam)}</Text> */}
 
 
 

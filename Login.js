@@ -18,13 +18,7 @@ class Login extends React.Component {
       showProfile: false,
     }
   }
-  handleUsername(text) {
-    this.setState({ username: text })
-  }
 
-  handlePassword(text) {
-    this.setState({ password: text })
-  }
 
   async logIn() {
     var myHeaders = new Headers();
@@ -58,12 +52,6 @@ class Login extends React.Component {
     }
   };
 
-  profile() {
-    console.log(this.state.userProfile);
-    console.log(this.state.accesscode);
-
-  };
-
 
 
   render() {
@@ -81,12 +69,12 @@ class Login extends React.Component {
           <TextInput style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginTop: 20, marginBottom: 15, borderRadius: 5 }}
             placeholderColor="#c4c3cb"
             placeholder="Username"
-            onChangeText={(text) => { this.handleUsername(text) }}
+            onChangeText={(text) => { this.setState({ username: text }) }}
           />
           <TextInput style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginBottom: 15, borderRadius: 5 }}
             placeholderColor="#c4c3cb"
             placeholder="Password"
-            onChangeText={(text) => { this.handlePassword(text) }}
+            onChangeText={(text) => { this.setState({ password: text }) }}
           />
           <View style={{ flexDirection: 'row' }}>
             <Button
@@ -96,31 +84,30 @@ class Login extends React.Component {
 
                   console.log(this.state.showProfile);
                   if (this.state.showProfile) {
-                    this.profile();
 
                     this.props.navigation.navigate('Home', {
                       screen: 'Profile',
                       params: {
-                        user: 123,
+                        userProfile: this.state.userProfile,
+                        accesscode: this.state.accesscode
                       }
                     })
                   }
+                }).then(() => {
+                  console.log(this.state.userProfile);
+                  console.log(this.state.accesscode);
+                  console.log(this.state.username);
                 });
               }}
             />
             <Button
               title="Sign Up"
-              onPress={() => this.props.navigation.navigate('SignUp', {
-                itemId: 86,
-                otherParam: 'anything you want here',
-              })}
-            />
-            <Button
-              title="Test"
-              onPress={() => this.props.navigation.navigate('Test', {
-                itemId: 86,
-                otherParam: 'anything you want here',
-              })}
+              onPress={() => this.props.navigation.navigate('SignUp'
+                // , {
+                //   itemId: 86,
+                //   otherParam: 'anything you want here',
+                // }
+              )}
             />
           </View>
         </View>

@@ -1,16 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import base64 from "base-64";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
       errorMessage: "",
       showProfile: false,
-      accesscode: "",
-      userProfile: "",
+      accesscode: this.props.route.params.accesscode,
+      userProfile: this.props.route.params.userProfile,
     }
   }
 
@@ -24,41 +23,64 @@ class Profile extends React.Component {
       headers: myDeleteHeaders,
       redirect: 'follow',
     };
-    try {
-      let deleteResponse = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.username, deleteOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-      // let deleteMessage = await deleteResponse.json();
-      // console.log("acessCode: " + JSON.parse(JSON.stringify(deleteMessage.token)));
-
-      this.setState({ errorMessage: deleteMessage.message });
-    } catch (err) {
-      this.setState({ errorMessage: "Cannot Delete User" });
-    }
-    this.setState({
-      username: "",
-      password: "",
-      userProfile: {},
-      accesscode: "",
-      errorMessage: "",
-      showProfile: false,
-    });
-    Alert.alert("Thank you for joining us!!!", this.state.errorMessage);
+    let deleteResponse = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.userProfile.username, deleteOptions)
+    let deleteMessage = await deleteResponse.json();
+    console.log(deleteMessage.message);
   }
+
+
+  async updateProfile() {
+    var myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("x-access-token", this.state.accesscode);
+    var raw = JSON.stringify({
+      firstName: "bBucky",
+      lastName: "bBadger",
+    });
+
+    var requestOptions = {
+      method: 'PUT',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    let response2 = fetch('https://cs571.cs.wisc.edu/users/' + this.props.route.params.userProfile.username, requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  };
+
+
   render() {
     return (
       <View style={styles.container}>
-       <Text>My name~~~: {JSON.stringify(this.props.route.params.user)}</Text>
+        <Text>My userProfile: {JSON.stringify(this.state.userProfile.firstName)}</Text>
+        <Text>acessCode: {this.state.accesscode}</Text>
+
+
         <Text style={styles.title}>About Me:</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Personal Information</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>First Name</Text>
-        <TextInput style={styles.input} placeholder="Enter First Name" />
+
+        <TextInput style={styles.input}
+          placeholder="Enter First Name"
+          defaultValue={JSON.stringify(this.state.userProfile.firstName)}
+          onChangeText={(text) => { this.setState({ firstName: text }) }} />
+
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Last Name</Text>
-        <TextInput style={styles.input} placeholder="Enter Last Name" />
+        <TextInput style={styles.input} placeholder="Enter Last Name"
+          defaultValue={JSON.stringify(this.state.userProfile.lastName)}
+          onChangeText={(text) => { this.setState({ lastName: text }) }} />
+
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Fitness Goal</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Daily Calories (kal)</Text>
-        <TextInput style={styles.input} placeholder="Enter an input" />
+
+        <TextInput style={styles.input}
+          placeholder="Enter an input"
+          defaultValue={JSON.stringify(this.state.userProfile.goalDailyCalories)} />
+
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Daily Protein (grams)</Text>
         <TextInput style={styles.input} placeholder="Enter an input" />
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Daily Carbs (grams)</Text>
@@ -71,11 +93,11 @@ class Profile extends React.Component {
 
         <Button
           title="SAVE PROFILE"
-          onPress={() => console.log("UPDATE TO SERVER")}
+          onPress={() => { this.updateProfile(); console.log("UPDATE TO SERVER"); }}
         />
         <Button
-          title="Delete"
-          onPress={() => this.deleteProfile()}
+          title="Delete Profile"
+          onPress={() => { this.deleteProfile() }}
         />
         <Button
           title="Log out"

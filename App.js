@@ -7,6 +7,7 @@ import Profile from "./Profile";
 import Exercises from "./Exercises";
 import Test from "./Test";
 
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -40,8 +41,8 @@ function StackNavigator() {
       </Stack.Screen>
       <Stack.Screen name="Home" component={Home}>
       </Stack.Screen>
-      <Stack.Screen name="Test" component={Test}>
-      </Stack.Screen>
+      {/* <Stack.Screen name="Test" component={Test}>
+      </Stack.Screen> */}
     </Stack.Navigator>
   );
 }
