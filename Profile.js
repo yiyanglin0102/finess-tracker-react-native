@@ -89,7 +89,18 @@ class Profile extends React.Component {
             profileObject.firstName = text;
             this.setState({ userProfile: profileObject })
           }} />
-
+<Button
+          title="Exercises"
+          onPress={() => {
+            this.props.navigation.navigate('Home', {
+              screen: 'Exercises',
+              params: {
+                userProfile: this.state.userProfile,
+                accesscode: this.state.accesscode
+              }
+            })
+          }}
+        />
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Last Name</Text>
         <TextInput style={styles.input} placeholder="Enter Last Name"
           defaultValue={this.state.userProfile.lastName}
@@ -163,18 +174,7 @@ class Profile extends React.Component {
             this.props.navigation.replace('Login');
           }}
         />
-        <Button
-          title="Exercises"
-          onPress={() => {
-            this.props.navigation.navigate('Home', {
-              screen: 'Exercises',
-              params: {
-                userProfile: this.state.userProfile,
-                accesscode: this.state.accesscode
-              }
-            })
-          }}
-        />
+        
       </View>
     );
   }

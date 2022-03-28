@@ -20,8 +20,16 @@ class Exercises extends Component {
       errorMessage: "",
       accesscode: this.props.route.params.accesscode,
       userProfile: this.props.route.params.userProfile,
+      modalVisible: false,
       allActivities: [],
+      addName: "",
+      addDuration: 0,
+      addCaloriesBurnt: 0,
+      addDate: 0,
     }
+  }
+  componentDidMount() {
+    this.allActivities();
   }
   async allActivities() {
     var myHeaders = new Headers();
@@ -48,16 +56,11 @@ class Exercises extends Component {
     }
   };
 
-  state = {
-    modalVisible: false
-  };
-
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
 
   render() {
-    const { modalVisible } = this.state;
     const renderItem = ({ item }) => (
       <Item title={item.title}
         id={item.id}
@@ -75,8 +78,10 @@ class Exercises extends Component {
         <Button
           title="SAVE PROFILE"
           onPress={() => {
-            this.allActivities();
             console.log("get from SERVER");
+            console.log("addName: " + this.state.addName);
+            console.log("addDuration: " + this.state.addDuration);
+            console.log("addDate: " + this.state.addDate);
           }}
         />
         <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Exercises</Text>
@@ -93,14 +98,11 @@ class Exercises extends Component {
         </View>
 
 
-
-
         <Modal
           animationType="fade"
           transparent={true}
-          visible={modalVisible}
+          visible={this.state.modalVisible}
           onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
             this.setModalVisible(!modalVisible);
           }}
         >
@@ -110,40 +112,64 @@ class Exercises extends Component {
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercise Name</Text>
               <TextInput style={styles.input} placeholder="Enter an input"
                 // defaultValue={"123"}
-                onChangeText={(text) => { console.log(text) }} />
+                onChangeText={(text) => {
+                  this.setState({ addName: text });
+                }} />
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Duration (minutes)</Text>
               <TextInput style={styles.input} placeholder="Enter an input"
+                keyboardType='numeric'
                 // defaultValue={"123"}
-                onChangeText={(text) => { console.log(text) }} />
+                onChangeText={(text) => {
+                  this.setState({ addDuration: Number(text) });
+                }} />
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Calories Burnt</Text>
               <TextInput style={styles.input} placeholder="Enter an input"
+                keyboardType='numeric'
                 // defaultValue={"123"}
-                onChangeText={(text) => { console.log(text) }} />
+                onChangeText={(text) => {
+                  this.setState({ addCaloriesBurnt: Number(text) });
+                }} />
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Looks good! Ready to save your work?</Text>
 
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => { console.log("added exercise"); }}
-              >
-                <Text style={styles.textStyle}>Save Exercise</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>Never Mind</Text>
-              </Pressable>
+              <Button
+                title="Save Exercise"
+                onPress={async () => {
+                  var date = await new Date();
+                  // await console.log(date); // Thu Nov 07 2019 11:58:58 GMT-0600 (Central Standard Time)
+                  var json = await JSON.stringify(date);
+                  await this.setState({ addDate: json });
+
+                  await console.log("---- form ---- ");
+                  await console.log("addName: " + this.state.addName);
+                  await console.log("addDuration: " + this.state.addDuration);
+                  await console.log("addCarBurnt: " + this.state.addCaloriesBurnt);
+                  await console.log("addDate: " + this.state.addDate);
+
+                  await console.log("added exercise"); //api
+
+                  await this.setState({ addName: "" });
+                  await this.setState({ addDuration: 0 });
+                  await this.setState({ addCaloriesBurnt: 0 });
+                  await this.setState({ addDate: "" });
+
+                  await this.setState({ modalVisible: !this.state.modalVisible })
+                }}
+              />
+
+              <Button
+                title="Never Mind"
+                onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}
+              />
+
             </View>
           </View>
         </Modal>
 
 
-        <Pressable
-          style={[styles.button, styles.buttonOpen]}
+        <Button
+          title="Add Exercise"
           onPress={() => this.setModalVisible(true)}
-        >
-          <Text style={styles.textStyle}>Add Exercise</Text>
-        </Pressable>
+        />
 
 
       </View>
