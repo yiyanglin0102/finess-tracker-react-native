@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert, ScrollView } from "react-native";
 import base64 from "base-64"; // Use this library to encode `username:password` to base64
+import Test from "./Test";
 
 class Login extends React.Component {
   // Use Basic access authentication (https://en.wikipedia.org/wiki/Basic_access_authentication) to authenticate the user.
@@ -103,10 +104,15 @@ class Login extends React.Component {
             <Button
               title="Sign Up"
               onPress={() => this.props.navigation.navigate('SignUp'
-                // , {
-                //   itemId: 86,
-                //   otherParam: 'anything you want here',
-                // }
+              )}
+            />
+            <Button
+              title="Test"
+              onPress={() => this.props.navigation.navigate('Test'
+                , {
+                  itemId: 86,
+                  otherParam: 'anything you want here',
+                }
               )}
             />
           </View>

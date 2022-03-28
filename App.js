@@ -41,8 +41,8 @@ function StackNavigator() {
       </Stack.Screen>
       <Stack.Screen name="Home" component={Home}>
       </Stack.Screen>
-      {/* <Stack.Screen name="Test" component={Test}>
-      </Stack.Screen> */}
+      <Stack.Screen name="Test" component={Test}>
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }

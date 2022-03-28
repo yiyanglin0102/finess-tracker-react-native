@@ -31,6 +31,7 @@ class Exercises extends Component {
   componentDidMount() {
     this.allActivities();
   }
+
   async allActivities() {
     var myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
@@ -56,6 +57,36 @@ class Exercises extends Component {
     }
   };
 
+  async addActivity() {
+
+    var raw = JSON.stringify({
+      name: this.state.addName,
+      duration: this.state.addDuration,
+      date: this.state.addDate,
+      calories: this.state.addCaloriesBurnt,
+    });
+
+    var myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("x-access-token", this.state.accesscode);
+    var requestOptions = {
+      method: 'POST',
+      body: raw,
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+
+    try {
+      let response = await fetch('https://cs571.cs.wisc.edu/activities', requestOptions)
+      let res = await response.text();
+      console.log(res);
+
+    } catch (err) {
+      // console.log(err);
+    }
+    this.allActivities();
+  };
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
@@ -111,21 +142,18 @@ class Exercises extends Component {
               <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Exercise Details</Text>
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercise Name</Text>
               <TextInput style={styles.input} placeholder="Enter an input"
-                // defaultValue={"123"}
                 onChangeText={(text) => {
                   this.setState({ addName: text });
                 }} />
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Duration (minutes)</Text>
               <TextInput style={styles.input} placeholder="Enter an input"
                 keyboardType='numeric'
-                // defaultValue={"123"}
                 onChangeText={(text) => {
                   this.setState({ addDuration: Number(text) });
                 }} />
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Calories Burnt</Text>
               <TextInput style={styles.input} placeholder="Enter an input"
                 keyboardType='numeric'
-                // defaultValue={"123"}
                 onChangeText={(text) => {
                   this.setState({ addCaloriesBurnt: Number(text) });
                 }} />
@@ -138,23 +166,33 @@ class Exercises extends Component {
                   // await console.log(date); // Thu Nov 07 2019 11:58:58 GMT-0600 (Central Standard Time)
                   var json = await JSON.stringify(date);
                   await this.setState({ addDate: json });
+                  // await console.log("---- form ---- ");
+                  // await console.log("addName: " + this.state.addName);
+                  // await console.log("addDuration: " + this.state.addDuration);
+                  // await console.log("addCarBurnt: " + this.state.addCaloriesBurnt);
+                  // await console.log("addDate: " + this.state.addDate);
 
-                  await console.log("---- form ---- ");
-                  await console.log("addName: " + this.state.addName);
-                  await console.log("addDuration: " + this.state.addDuration);
-                  await console.log("addCarBurnt: " + this.state.addCaloriesBurnt);
-                  await console.log("addDate: " + this.state.addDate);
-
-                  await console.log("added exercise"); //api
-
+                  await this.addActivity();
+                  // await console.log("added exercise"); //api
                   await this.setState({ addName: "" });
                   await this.setState({ addDuration: 0 });
                   await this.setState({ addCaloriesBurnt: 0 });
                   await this.setState({ addDate: "" });
-
                   await this.setState({ modalVisible: !this.state.modalVisible })
                 }}
               />
+
+
+
+              {/* <Button
+                title="test_addddddd"
+                onPress={() => {
+
+                  this.addActivity();
+
+
+                }}
+              /> */}
 
               <Button
                 title="Never Mind"
@@ -165,13 +203,10 @@ class Exercises extends Component {
           </View>
         </Modal>
 
-
         <Button
           title="Add Exercise"
-          onPress={() => this.setModalVisible(true)}
+          onPress={() => { this.setModalVisible(true) }}
         />
-
-
       </View>
     );
   }
