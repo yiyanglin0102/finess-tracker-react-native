@@ -23,10 +23,18 @@ function Home() {
       <Tab.Screen
         name="Profile"
         component={Profile}
+        // initialParams={{
+        //   userProfile: this.state.userProfile,
+        //   accesscode: this.state.accesscode,
+        // }}
       />
       <Tab.Screen
         name="Exercises"
         component={Exercises}
+        // initialParams={{
+        //   userProfile: this.state.userProfile,
+        //   accesscode: this.state.accesscode,
+        // }}
       />
     </Tab.Navigator>
   );

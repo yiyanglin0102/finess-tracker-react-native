@@ -1,15 +1,6 @@
 import React, { Component } from "react";
 import { Button, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
-
-const Item = ({ name, id, calories, date, duration }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>Name: {name}</Text>
-    <Text style={styles.title}>ID: {id}</Text>
-    <Text style={styles.title}>Calories: {calories}</Text>
-    <Text style={styles.title}>Duration: {duration}</Text>
-    <Text style={styles.title}>Date: {date}</Text>
-  </View>
-);
+import Item from './Item';
 
 class Exercises extends Component {
   constructor(props) {
@@ -27,9 +18,13 @@ class Exercises extends Component {
       addCaloriesBurnt: 0,
       addDate: 0,
     }
+    this.deleteActivity = this.deleteActivity.bind(this);
   }
   componentDidMount() {
     this.allActivities();
+  }
+  componentDidUpdate() {
+    // this.allActivities();
   }
 
   async allActivities() {
@@ -58,7 +53,6 @@ class Exercises extends Component {
   };
 
   async addActivity() {
-
     var raw = JSON.stringify({
       name: this.state.addName,
       duration: this.state.addDuration,
@@ -91,6 +85,27 @@ class Exercises extends Component {
     this.setState({ modalVisible: visible });
   }
 
+  async deleteActivity(id) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("x-access-token", this.state.accesscode);
+    // myHeaders.append("Access-Control-Allow-Origin", "*");
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+    try {
+      let response = await fetch('https://cs571.cs.wisc.edu/activities/' + id, requestOptions)
+      let res = await response.text();
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+    this.allActivities();
+  }
+
   render() {
     const renderItem = ({ item }) => (
       <Item title={item.title}
@@ -99,6 +114,9 @@ class Exercises extends Component {
         calories={item.calories}
         duration={item.duration}
         date={item.date}
+        userProfile={this.state.userProfile}
+        accesscode={this.state.accesscode}
+        deleteActivity={this.deleteActivity}
       />
     );
 
@@ -119,7 +137,6 @@ class Exercises extends Component {
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Let's get to work!</Text>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Record your exercises below</Text>
 
-
         <View style={styles.container}>
           <FlatList
             data={this.state.allActivities}
@@ -127,7 +144,6 @@ class Exercises extends Component {
             keyExtractor={item => item.id}
           />
         </View>
-
 
         <Modal
           animationType="fade"
@@ -171,7 +187,6 @@ class Exercises extends Component {
                   // await console.log("addDuration: " + this.state.addDuration);
                   // await console.log("addCarBurnt: " + this.state.addCaloriesBurnt);
                   // await console.log("addDate: " + this.state.addDate);
-
                   await this.addActivity();
                   // await console.log("added exercise"); //api
                   await this.setState({ addName: "" });
@@ -181,19 +196,6 @@ class Exercises extends Component {
                   await this.setState({ modalVisible: !this.state.modalVisible })
                 }}
               />
-
-
-
-              {/* <Button
-                title="test_addddddd"
-                onPress={() => {
-
-                  this.addActivity();
-
-
-                }}
-              /> */}
-
               <Button
                 title="Never Mind"
                 onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}

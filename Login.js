@@ -16,7 +16,6 @@ class Login extends React.Component {
       showProfile: false,
       accesscode: "",
       userProfile: "",
-      showProfile: false,
     }
   }
 
@@ -82,12 +81,10 @@ class Login extends React.Component {
               title="logIn"
               onPress={() => {
                 this.logIn().then(() => {
-
                   console.log(this.state.showProfile);
                   if (this.state.showProfile) {
-
                     this.props.navigation.navigate('Home', {
-                      screen: 'Profile',
+                      screen: 'Exercises',
                       params: {
                         userProfile: this.state.userProfile,
                         accesscode: this.state.accesscode
@@ -95,9 +92,17 @@ class Login extends React.Component {
                     })
                   }
                 }).then(() => {
-                  console.log(this.state.userProfile);
-                  console.log(this.state.accesscode);
-                  console.log(this.state.username);
+                  if (this.state.showProfile) {
+                    this.props.navigation.navigate('Home', {
+                      screen: 'Profile',
+                      params: {
+                        userProfile: this.state.userProfile,
+                        accesscode: this.state.accesscode
+                      }
+                    })
+
+                  }
+
                 });
               }}
             />

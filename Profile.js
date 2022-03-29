@@ -41,7 +41,7 @@ class Profile extends React.Component {
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("x-access-token", this.state.accesscode);
-    // myHeaders.append("mode", "no-cors"); Ask!!!!
+    // myHeaders.append("mode", "no-cors"); //Ask!!!!
     // myHeaders.append("Access-Control-Allow-Origin", "*");
 
 
@@ -61,7 +61,6 @@ class Profile extends React.Component {
       body: raw,
       redirect: 'follow'
     };
-
     let response2 = fetch('https://cs571.cs.wisc.edu/users/' + this.props.route.params.userProfile.username, requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
@@ -89,18 +88,6 @@ class Profile extends React.Component {
             profileObject.firstName = text;
             this.setState({ userProfile: profileObject })
           }} />
-<Button
-          title="Exercises"
-          onPress={() => {
-            this.props.navigation.navigate('Home', {
-              screen: 'Exercises',
-              params: {
-                userProfile: this.state.userProfile,
-                accesscode: this.state.accesscode
-              }
-            })
-          }}
-        />
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Last Name</Text>
         <TextInput style={styles.input} placeholder="Enter Last Name"
           defaultValue={this.state.userProfile.lastName}
@@ -174,7 +161,6 @@ class Profile extends React.Component {
             this.props.navigation.replace('Login');
           }}
         />
-        
       </View>
     );
   }
