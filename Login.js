@@ -83,7 +83,7 @@ class Login extends React.Component {
                 this.logIn().then(() => {
                   console.log(this.state.showProfile);
                   if (this.state.showProfile) {
-                    this.props.navigation.navigate('Home', {
+                    this.props.navigation.replace('Home', {
                       screen: 'Exercises',
                       params: {
                         userProfile: this.state.userProfile,

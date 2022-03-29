@@ -48,11 +48,11 @@ class Profile extends React.Component {
       body: JSON.stringify({
         firstName: this.state.firstName,
         lastName: this.state.lastName,
-        goalDailyCalories: this.state.goalDailyCalories,
-        goalDailyProtein: this.state.goalDailyProtein,
-        goalDailyCarbohydrates: this.state.goalDailyCarbohydrates,
-        goalDailyFat: this.state.goalDailyFat,
-        goalDailyActivity: this.state.goalDailyActivity,
+        goalDailyCalories: Number(this.state.goalDailyCalories),
+        goalDailyProtein: Number(this.state.goalDailyProtein),
+        goalDailyCarbohydrates: Number(this.state.goalDailyCarbohydrates),
+        goalDailyFat: Number(this.state.goalDailyFat),
+        goalDailyActivity: Number(this.state.goalDailyActivity),
       }),
     };
     let response2 = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.userProfile.username, requestOptions)
@@ -147,12 +147,25 @@ class Profile extends React.Component {
         />
         <Button
           title="Delete Profile"
-          onPress={() => { this.deleteProfile(); this.props.navigation.pop(); }}
+          onPress={() => {
+            this.deleteProfile();
+            this.props.navigation.pop();
+            this.props.navigation.replace('Login', {
+              screen: 'Login',
+              params: {
+                userProfile: "",
+                accesscode: ""
+              }
+            })
+          }}
         />
         <Button
           title="Log out"
           onPress={() => {
-            this.props.navigation.replace('Login');
+            this.props.navigation.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            });
           }}
         />
       </View>

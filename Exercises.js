@@ -211,8 +211,7 @@ class Exercises extends Component {
                 title="Save Exercise"
                 onPress={async () => {
                   var date = await new Date();
-                  await console.log("215 line date " + date);
-
+                  // await console.log("215 line date " + date);
                   var json = await JSON.stringify(date);
                   await this.setState({ addDate: json });
                   // await console.log("---- form ---- ");
@@ -241,6 +240,15 @@ class Exercises extends Component {
         <Button
           title="Add Exercise"
           onPress={() => { this.setModalVisible(true) }}
+        />
+        <Button
+          title="Log out"
+          onPress={() => {
+            this.props.navigation.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            });
+          }}
         />
       </View>
     );

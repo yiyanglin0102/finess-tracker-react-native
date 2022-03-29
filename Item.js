@@ -93,7 +93,7 @@ class Item extends Component {
                                 onPress={async () => {
                                     var date = await new Date();
                                     // await console.log(date); // Thu Nov 07 2019 11:58:58 GMT-0600 (Central Standard Time)
-                                    var json = await JSON.stringify(date);
+                                    var json = await JSON.stringify(date); // date.toISOString
                                     // await console.log("97 line date " + json);
                                     await this.setState({ date: json.slice(1, -1) });
                                     await this.setState({ name: this.state.editName });

@@ -58,13 +58,6 @@ class SignupView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-
-      
-      {/* <Text>itemId: {JSON.stringify(this.props.route.params.itemId)}</Text>
-        <Text>otherParam: {JSON.stringify(this.props.route.params.otherParam)}</Text> */}
-
-
-
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Create with Username and Password</Text>
           <TextInput
@@ -86,8 +79,15 @@ class SignupView extends React.Component {
             text={'Create Account'}
             textStyle={{ color: "#4d4a43", fontSize: 19, fontWeight: 'bold' }}
             onPress={() => {
-              this.SignUp().then(() =>
-                this.buttonAlert())
+              this.SignUp().then(() => {
+                this.buttonAlert();
+                if (this.state.errorMessage.message === "User created!") {  // check msg with success word then return true
+                  this.props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Login' }],
+                  });
+                }
+              })
             }}
           />
           <Button
@@ -95,7 +95,12 @@ class SignupView extends React.Component {
             buttonStyle={{ height: 40, width: 120, fontSize: 40, alignSelf: 'center', alignItems: 'center', backgroundColor: '#aaaaaa', marginTop: 14, marginLeft: 6, justifyContent: 'center', borderRadius: 10 }}
             text={'Cancel'}
             textStyle={{ color: "#4d4a43", fontSize: 19, fontWeight: 'bold' }}
-            onPress={() => this.props.navigation.navigate('Login')}
+            onPress={() => {
+              this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+              });
+            }}
           />
         </View>
       </View>
