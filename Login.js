@@ -100,9 +100,7 @@ class Login extends React.Component {
                         accesscode: this.state.accesscode
                       }
                     })
-
                   }
-
                 });
               }}
             />

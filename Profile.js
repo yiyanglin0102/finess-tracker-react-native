@@ -37,31 +37,25 @@ class Profile extends React.Component {
 
 
   async updateProfile() {
-    var myHeaders = new Headers();
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("x-access-token", this.state.accesscode);
-    // myHeaders.append("mode", "no-cors"); //Ask!!!!
-    // myHeaders.append("Access-Control-Allow-Origin", "*");
-
-
-    var raw = JSON.stringify({
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      goalDailyCalories: this.state.goalDailyCalories,
-      goalDailyProtein: this.state.goalDailyProtein,
-      goalDailyCarbohydrates: this.state.goalDailyCarbohydrates,
-      goalDailyFat: this.state.goalDailyFat,
-      goalDailyActivity: this.state.goalDailyActivity,
-    });
 
     var requestOptions = {
       method: 'PUT',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': this.state.accesscode,
+      },
+      body: JSON.stringify({
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        goalDailyCalories: this.state.goalDailyCalories,
+        goalDailyProtein: this.state.goalDailyProtein,
+        goalDailyCarbohydrates: this.state.goalDailyCarbohydrates,
+        goalDailyFat: this.state.goalDailyFat,
+        goalDailyActivity: this.state.goalDailyActivity,
+      }),
     };
-    let response2 = fetch('https://cs571.cs.wisc.edu/users/' + this.props.route.params.userProfile.username, requestOptions)
+    let response2 = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.userProfile.username, requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
@@ -72,7 +66,7 @@ class Profile extends React.Component {
     return (
       <View style={styles.container}>
         <Text>My userProfile: {this.state.userProfile.firstName}</Text>
-        <Text>acessCode: {this.state.accesscode}</Text>
+        <Text>accessCode: {this.state.accesscode}</Text>
 
 
         <Text style={styles.title}>About Me:</Text>

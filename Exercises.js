@@ -19,6 +19,7 @@ class Exercises extends Component {
       addDate: 0,
     }
     this.deleteActivity = this.deleteActivity.bind(this);
+    this.editActivity = this.editActivity.bind(this);
   }
   componentDidMount() {
     this.allActivities();
@@ -106,6 +107,46 @@ class Exercises extends Component {
     this.allActivities();
   }
 
+
+  async editActivity(id, name, calories, duration, date) {
+    // var requestOptions = {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'x-access-token': this.state.accesscode,
+    //   },
+    //   body: JSON.stringify({
+    //     firstName: this.state.firstName,
+    //     lastName: this.state.lastName,
+    //     goalDailyCalories: this.state.goalDailyCalories,
+    //     goalDailyProtein: this.state.goalDailyProtein,
+    //     goalDailyCarbohydrates: this.state.goalDailyCarbohydrates,
+    //     goalDailyFat: this.state.goalDailyFat,
+    //     goalDailyActivity: this.state.goalDailyActivity,
+    //   }),
+    // };
+    // let response2 = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.userProfile.username, requestOptions)
+    //   .then(response => response.text())
+    //   .then(result => console.log(result))
+    //   .catch(error => console.log('error', error));
+
+
+
+
+
+    console.log(id);
+    console.log(name);
+    console.log(calories);
+    console.log(duration);
+    console.log(date);
+  }
+
+
+
+
+
+
   render() {
     const renderItem = ({ item }) => (
       <Item title={item.title}
@@ -117,6 +158,7 @@ class Exercises extends Component {
         userProfile={this.state.userProfile}
         accesscode={this.state.accesscode}
         deleteActivity={this.deleteActivity}
+        editActivity={this.editActivity}
       />
     );
 
@@ -125,7 +167,7 @@ class Exercises extends Component {
         <Text>My userProfile: {this.state.userProfile.firstName}</Text>
         <Text>acessCode: {this.state.accesscode}</Text>
         <Button
-          title="SAVE PROFILE"
+          title="Test"
           onPress={() => {
             console.log("get from SERVER");
             console.log("addName: " + this.state.addName);
