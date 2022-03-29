@@ -14,9 +14,9 @@ class Item extends Component {
             userProfile: this.props.userProfile,
             accesscode: this.props.accesscode,
             modalVisible: false,
-            editName: "",
-            editDuration: 0,
-            editCaloriesBurnt: 0,
+            editName: this.props.name,
+            editDuration: this.props.duration,
+            editCaloriesBurnt: this.props.calories,
         }
     }
     setModalVisible = (visible) => {
@@ -29,7 +29,7 @@ class Item extends Component {
                 <Text style={styles.title}>ID: {this.state.id}</Text>
                 <Text style={styles.title}>Calories: {this.state.calories}</Text>
                 <Text style={styles.title}>Duration: {this.state.duration}</Text>
-                <Text style={styles.title}>Date: {this.state.date}</Text>
+                <Text style={styles.title}>Date: {new Date(this.state.date).toString()}</Text>
                 <Button
                     title="Edit"
                     onPress={() => {
@@ -94,25 +94,18 @@ class Item extends Component {
                                     var date = await new Date();
                                     // await console.log(date); // Thu Nov 07 2019 11:58:58 GMT-0600 (Central Standard Time)
                                     var json = await JSON.stringify(date);
-                                    await this.setState({ date: json });
-
+                                    // await console.log("97 line date " + json);
+                                    await this.setState({ date: json.slice(1, -1) });
                                     await this.setState({ name: this.state.editName });
                                     await this.setState({ duration: this.state.editDuration });
                                     await this.setState({ calories: this.state.editCaloriesBurnt });
 
-                                    await console.log("---- form ---- ");
-                                    await console.log("editName: " + this.state.name);
-                                    await console.log("editDuration: " + this.state.duration);
-                                    await console.log("editCarBurnt: " + this.state.calories);
-                                    await console.log("editDate: " + this.state.date);
-
-
-
+                                    // await console.log("---- form ---- ");
+                                    // await console.log("editName: " + this.state.name);
+                                    // await console.log("editDuration: " + this.state.duration);
+                                    // await console.log("editCarBurnt: " + this.state.calories);
+                                    // await console.log("editDate: " + this.state.date);
                                     this.props.editActivity(this.state.id, this.state.name, this.state.calories, this.state.duration, this.state.date);
-
-
-
-
                                     await this.setState({ modalVisible: !this.state.modalVisible })
                                 }}
                             />

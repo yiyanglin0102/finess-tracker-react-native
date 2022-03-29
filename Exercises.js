@@ -109,43 +109,33 @@ class Exercises extends Component {
 
 
   async editActivity(id, name, calories, duration, date) {
-    // var requestOptions = {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //     'x-access-token': this.state.accesscode,
-    //   },
-    //   body: JSON.stringify({
-    //     firstName: this.state.firstName,
-    //     lastName: this.state.lastName,
-    //     goalDailyCalories: this.state.goalDailyCalories,
-    //     goalDailyProtein: this.state.goalDailyProtein,
-    //     goalDailyCarbohydrates: this.state.goalDailyCarbohydrates,
-    //     goalDailyFat: this.state.goalDailyFat,
-    //     goalDailyActivity: this.state.goalDailyActivity,
-    //   }),
-    // };
-    // let response2 = await fetch('https://cs571.cs.wisc.edu/users/' + this.state.userProfile.username, requestOptions)
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
-
-
-
-
+    var requestOptions = {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': this.state.accesscode,
+      },
+      body: JSON.stringify({
+        name: name,
+        duration: duration,
+        calories: calories,
+        date: date
+      }),
+    };
+    let response2 = await fetch('https://cs571.cs.wisc.edu/activities/' + id, requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
 
     console.log(id);
     console.log(name);
     console.log(calories);
     console.log(duration);
     console.log(date);
+
+    this.allActivities();
   }
-
-
-
-
-
 
   render() {
     const renderItem = ({ item }) => (
@@ -221,7 +211,8 @@ class Exercises extends Component {
                 title="Save Exercise"
                 onPress={async () => {
                   var date = await new Date();
-                  // await console.log(date); // Thu Nov 07 2019 11:58:58 GMT-0600 (Central Standard Time)
+                  await console.log("215 line date " + date);
+
                   var json = await JSON.stringify(date);
                   await this.setState({ addDate: json });
                   // await console.log("---- form ---- ");
