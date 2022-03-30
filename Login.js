@@ -42,6 +42,15 @@ class Login extends React.Component {
       if (!("Token is invalid!" === JSON.parse(res).message)) {
         this.setState({ showProfile: true })
       }
+      else {
+        Alert.alert(
+          "Login",
+          "Incorrect username or password! Please try again.",
+          [
+            { text: "OK" }
+          ]
+        )
+      }
     } catch (err) {
       // console.log(err);
     }
@@ -71,7 +80,7 @@ class Login extends React.Component {
           />
           <View style={{ flexDirection: 'row' }}>
             <Button
-              title="Log In"
+              title="Login"
               onPress={() => {
                 this.logIn().then(() => {
                   console.log(this.state.showProfile);
