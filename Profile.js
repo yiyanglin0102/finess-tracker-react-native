@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput, StatusBar, ScrollView } from "react-native";
+import { Alert, StyleSheet, Text, View, Button, TextInput, StatusBar, ScrollView } from "react-native";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -138,8 +138,18 @@ class Profile extends React.Component {
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Looks good! All set?</Text>
 
           <Button
-            title="SAVE PROFILE"
-            onPress={() => { this.updateProfile(); console.log("UPDATE TO SERVER"); }}
+            title="Save Profile"
+            onPress={() => {
+              this.updateProfile();
+              console.log("UPDATE TO SERVER");
+              Alert.alert(
+                "Profile",
+                "Your profile has been updated!",
+                [
+                  { text: "OK" }
+                ]
+              )
+            }}
           />
           <Button
             title="Delete Profile"

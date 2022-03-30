@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
+import { Alert, Button, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
 import Item from './Item';
 
 class Exercises extends Component {
@@ -196,6 +196,13 @@ class Exercises extends Component {
                   await this.setState({ addCaloriesBurnt: 0 });
                   await this.setState({ addDate: "" });
                   await this.setState({ modalVisible: !this.state.modalVisible })
+                  await Alert.alert(
+                    "Exercises",
+                    "Exercise added!",
+                    [
+                      { text: "OK" }
+                    ]
+                  )
                 }}
               />
               <Button

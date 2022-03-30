@@ -19,7 +19,7 @@ class Item extends Component {
             editCaloriesBurnt: this.props.calories,
         }
     }
-    
+
     setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
     }
@@ -53,6 +53,13 @@ class Item extends Component {
                         this.props.deleteActivity(this.state.id);
                         console.log(this.state.userProfile.username);
                         console.log("delete " + this.state.id);
+                        Alert.alert(
+                            "Delete",
+                            "Exercise deleted!",
+                            [
+                                { text: "OK" }
+                            ]
+                        )
                     }}
                 />
                 <Modal
@@ -99,13 +106,20 @@ class Item extends Component {
                                 onPress={async () => {
                                     var date = await new Date();
                                     var json = await date.toISOString(); // date.toISOString
-                                    console.log("computer"+json);
+                                    console.log("computer" + json);
                                     await this.setState({ date: json });
                                     await this.setState({ name: this.state.editName });
                                     await this.setState({ duration: this.state.editDuration });
                                     await this.setState({ calories: this.state.editCaloriesBurnt });
                                     await this.props.editActivity(this.state.id, this.state.name, this.state.calories, this.state.duration, this.state.date);
                                     await this.setState({ modalVisible: !this.state.modalVisible })
+                                    await Alert.alert(
+                                        "Edit",
+                                        "Exercise updated!",
+                                        [
+                                            { text: "OK" }
+                                        ]
+                                    )
                                 }}
                             />
                             <Button
