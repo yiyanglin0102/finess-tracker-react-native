@@ -9,13 +9,13 @@ class Profile extends React.Component {
       showProfile: false,
       accesscode: this.props.route.params.accesscode,
       userProfile: this.props.route.params.userProfile,
-      firstName: "",
-      lastName: "",
-      goalDailyCalories: "",
-      goalDailyProtein: "",
-      goalDailyCarbohydrates: "",
-      goalDailyFat: "",
-      goalDailyActivity: "",
+      firstName: this.props.route.params.userProfile.username,
+      lastName: this.props.route.params.userProfile.lastname,
+      goalDailyCalories: this.props.route.params.userProfile.goalDailyCalories,
+      goalDailyProtein: this.props.route.params.userProfile.goalDailyProtein,
+      goalDailyCarbohydrates: this.props.route.params.userProfile.goalDailyCarbohydrates,
+      goalDailyFat: this.props.route.params.userProfile.goalDailyFat,
+      goalDailyActivity: this.props.route.params.userProfile.goalDailyActivity,
     }
   }
 
