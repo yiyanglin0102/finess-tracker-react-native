@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
-import base64 from "base-64";
 
 class SignupView extends React.Component {
   constructor(props) {
@@ -43,7 +42,7 @@ class SignupView extends React.Component {
 
   buttonAlert = () =>
     Alert.alert(
-      "Warning",
+      "Sign Up",
       this.state.errorMessage.message,
       [
         {
@@ -58,8 +57,14 @@ class SignupView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Create with Username and Password</Text>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text
+            style={{ marginBottom: 20, fontWeight: 'bold', fontSize: 30 }}
+          >
+            Fitness Tracker
+          </Text>
+          <Text style={{ marginBottom: 20, fontSize: 15 }}>New here? Let's get started!</Text>
+          <Text style={{ marginBottom: 20, fontSize: 15 }}>Please create an account below.</Text>
           <TextInput
             style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginTop: 20, marginBottom: 15, borderRadius: 5 }}
             placeholderColor="#c4c3cb"
@@ -70,7 +75,7 @@ class SignupView extends React.Component {
             style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginBottom: 15, borderRadius: 5 }}
             placeholder="Password"
             placeholderColor="#c4c3cb"
-            // secureTextEntry={true}
+            secureTextEntry={true}
             onChangeText={(text) => { this.handlePassword(text) }}
           />
           <Button

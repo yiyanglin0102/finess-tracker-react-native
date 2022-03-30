@@ -19,9 +19,18 @@ class Item extends Component {
             editCaloriesBurnt: this.props.calories,
         }
     }
+    
     setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
     }
+
+    setDate(date) {
+        var d = new Date(date);
+        var dateString = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() + " " +
+            d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        return dateString;
+    }
+
     render() {
         return (
             <View style={styles.item}>
@@ -29,13 +38,13 @@ class Item extends Component {
                 <Text style={styles.title}>ID: {this.state.id}</Text>
                 <Text style={styles.title}>Calories: {this.state.calories}</Text>
                 <Text style={styles.title}>Duration: {this.state.duration}</Text>
-                <Text style={styles.title}>Date: {new Date(this.state.date).toString()}</Text>
+                {/* <Text style={styles.title}>Date: {new Date(this.state.date).toString()}</Text> */}
+                <Text style={styles.title}>Date: {this.setDate(this.state.date.toLocaleString('en-US', { timeZone: 'America/Chicago' }))}</Text>
+
                 <Button
                     title="Edit"
                     onPress={() => {
                         this.setModalVisible(true);
-                        console.log(this.state.userProfile.username);
-                        console.log("edit " + this.state.id);
                     }}
                 />
                 <Button
@@ -56,56 +65,46 @@ class Item extends Component {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Exercise Details</Text>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercise Name</Text>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercise Details</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Exercise Name</Text>
                             <TextInput
                                 style={styles.input}
                                 placeholder="Enter an input"
-                                defaultValue={this.state.name}
+                                defaultValue={this.state.name.toString()}
                                 onChangeText={(text) => {
                                     this.setState({ editName: text });
-                                    // console.log(this.state.name);
                                 }} />
-                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Duration (minutes)</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Duration (minutes)</Text>
                             <TextInput
                                 style={styles.input}
                                 placeholder="Enter an input"
-                                defaultValue={this.state.duration}
+                                defaultValue={this.state.duration.toString()}
                                 keyboardType='numeric'
                                 onChangeText={(text) => {
                                     this.setState({ editDuration: Number(text) });
-                                    // console.log(this.state.duration);
                                 }} />
-                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Calories Burnt</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Calories Burnt</Text>
                             <TextInput
                                 style={styles.input}
-                                defaultValue={this.state.calories}
+                                defaultValue={this.state.calories.toString()}
                                 placeholder="Enter an input"
                                 keyboardType='numeric'
                                 onChangeText={(text) => {
                                     this.setState({ editCaloriesBurnt: Number(text) });
-                                    // console.log(this.state.calories);
                                 }} />
-                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Looks good! Ready to save your work?</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Looks good! Ready to save your work?</Text>
 
                             <Button
                                 title="Save Exercise"
                                 onPress={async () => {
                                     var date = await new Date();
-                                    // await console.log(date); // Thu Nov 07 2019 11:58:58 GMT-0600 (Central Standard Time)
-                                    var json = await JSON.stringify(date); // date.toISOString
-                                    // await console.log("97 line date " + json);
-                                    await this.setState({ date: json.slice(1, -1) });
+                                    var json = await date.toISOString(); // date.toISOString
+                                    console.log("computer"+json);
+                                    await this.setState({ date: json });
                                     await this.setState({ name: this.state.editName });
                                     await this.setState({ duration: this.state.editDuration });
                                     await this.setState({ calories: this.state.editCaloriesBurnt });
-
-                                    // await console.log("---- form ---- ");
-                                    // await console.log("editName: " + this.state.name);
-                                    // await console.log("editDuration: " + this.state.duration);
-                                    // await console.log("editCarBurnt: " + this.state.calories);
-                                    // await console.log("editDate: " + this.state.date);
-                                    this.props.editActivity(this.state.id, this.state.name, this.state.calories, this.state.duration, this.state.date);
+                                    await this.props.editActivity(this.state.id, this.state.name, this.state.calories, this.state.duration, this.state.date);
                                     await this.setState({ modalVisible: !this.state.modalVisible })
                                 }}
                             />
@@ -113,7 +112,6 @@ class Item extends Component {
                                 title="Never Mind"
                                 onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}
                             />
-
                         </View>
                     </View>
                 </Modal>
@@ -130,13 +128,13 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-        backgroundColor: '#f9c2ff',
+        backgroundColor: '#f0c07e',
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
     },
     title: {
-        fontSize: 32,
+        fontSize: 20,
     },
     centeredView: {
         flex: 1,
@@ -146,7 +144,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 20,
-        backgroundColor: "white",
+        backgroundColor: "#00b369",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",

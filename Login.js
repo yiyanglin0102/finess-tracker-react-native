@@ -1,12 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert, ScrollView } from "react-native";
-import base64 from "base-64"; // Use this library to encode `username:password` to base64
-import Test from "./Test";
+import base64 from "base-64";
 
 class Login extends React.Component {
-  // Use Basic access authentication (https://en.wikipedia.org/wiki/Basic_access_authentication) to authenticate the user.
-  // React Native 1 lecture covered a good example of how to do this.
-
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +14,6 @@ class Login extends React.Component {
       userProfile: "",
     }
   }
-
 
   async logIn() {
     var myHeaders = new Headers();
@@ -52,19 +47,16 @@ class Login extends React.Component {
     }
   };
 
-
-
   render() {
     return (
       <ScrollView style={styles.scrollView}>
-        <Text
-          style={{ color: "#C5050C", marginBottom: 20, fontWeight: 'bold', fontSize: 25 }}
-        >
-          Fitness Tracker
-        </Text>
-        <Text style={styles.body}>Welcome! Please login or signup to continue.</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Enter your Username and Password</Text>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text
+            style={{ marginBottom: 20, marginTop: 20, fontWeight: 'bold', fontSize: 30 }}
+          >
+            Fitness Tracker
+          </Text>
+          <Text style={{ marginBottom: 20, fontSize: 15 }}>Welcome! Please login or signup to continue.</Text>
 
           <TextInput style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginTop: 20, marginBottom: 15, borderRadius: 5 }}
             placeholderColor="#c4c3cb"
@@ -74,11 +66,12 @@ class Login extends React.Component {
           <TextInput style={{ paddingHorizontal: 5, height: 40, width: 140, borderColor: 'black', borderWidth: 2, marginBottom: 15, borderRadius: 5 }}
             placeholderColor="#c4c3cb"
             placeholder="Password"
+            secureTextEntry={true}
             onChangeText={(text) => { this.setState({ password: text }) }}
           />
           <View style={{ flexDirection: 'row' }}>
             <Button
-              title="logIn"
+              title="Log In"
               onPress={() => {
                 this.logIn().then(() => {
                   console.log(this.state.showProfile);
@@ -107,15 +100,6 @@ class Login extends React.Component {
             <Button
               title="Sign Up"
               onPress={() => this.props.navigation.navigate('SignUp'
-              )}
-            />
-            <Button
-              title="Test"
-              onPress={() => this.props.navigation.navigate('Test'
-                , {
-                  itemId: 86,
-                  otherParam: 'anything you want here',
-                }
               )}
             />
           </View>

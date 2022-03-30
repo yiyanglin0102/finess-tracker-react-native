@@ -1,17 +1,13 @@
 import 'react-native-gesture-handler';
 import React from "react";
-
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Profile from "./Profile";
 import Exercises from "./Exercises";
-import Test from "./Test";
-
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createDrawerNavigator } from '@react-navigation/drawer';
+// import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Stack = createStackNavigator(); // Stack Navigator (https://reactnavigation.org/docs/stack-navigator)
 // const Drawer = createDrawerNavigator(); // Drawer Navigator (https://reactnavigation.org/docs/drawer-navigator)
@@ -23,18 +19,18 @@ function Home() {
       <Tab.Screen
         name="Profile"
         component={Profile}
-        // initialParams={{
-        //   userProfile: this.state.userProfile,
-        //   accesscode: this.state.accesscode,
-        // }}
+      // initialParams={{
+      //   userProfile: this.state.userProfile,
+      //   accesscode: this.state.accesscode,
+      // }}
       />
       <Tab.Screen
         name="Exercises"
         component={Exercises}
-        // initialParams={{
-        //   userProfile: this.state.userProfile,
-        //   accesscode: this.state.accesscode,
-        // }}
+      // initialParams={{
+      //   userProfile: this.state.userProfile,
+      //   accesscode: this.state.accesscode,
+      // }}
       />
     </Tab.Navigator>
   );
@@ -49,8 +45,6 @@ function StackNavigator() {
       </Stack.Screen>
       <Stack.Screen name="Home" component={Home}>
       </Stack.Screen>
-      <Stack.Screen name="Test" component={Test}>
-      </Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -58,7 +52,6 @@ function StackNavigator() {
 class App extends React.Component {
   constructor() {
     super();
-
     this.state = {
       accessToken: undefined,
     };
@@ -79,12 +72,3 @@ class App extends React.Component {
 }
 
 export default App;
-// We can also nest another navigator (e.g. Bottom Tabs, Drawer, etc.) inside a stack navigator.
-// See https://reactnavigation.org/docs/nesting-navigators on how to nest navigators.    
-// (props) => <Profile {...props} />
-// If you do not need to pass props, you can pass a component as a `component` prop to Screens like below
-// <Stack.Screen name="SignUp" component={SignUp} /> 
-// This is how you pass props (e.g. setAccessToken) to another component
-// We only want to show Login and Signup View when the user is not logged in.
-// When the user is logged in, we want to show the Profile View and the Exercises View.            
-// How do we do this? See https://reactnavigation.org/docs/auth-flow
