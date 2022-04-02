@@ -4,6 +4,8 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import Profile from "./Profile";
 import Exercises from "./Exercises";
+import Meals from "./Meals";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -27,6 +29,14 @@ function Home() {
       <Tab.Screen
         name="Exercises"
         component={Exercises}
+      // initialParams={{
+      //   userProfile: this.state.userProfile,
+      //   accesscode: this.state.accesscode,
+      // }}
+      />
+       <Tab.Screen
+        name="Meals"
+        component={Meals}
       // initialParams={{
       //   userProfile: this.state.userProfile,
       //   accesscode: this.state.accesscode,

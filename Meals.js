@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Alert, Button, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
-import Item from './Item';
+import Meal from './Meal';
 
-class Exercises extends Component {
+class Meals extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,23 +12,21 @@ class Exercises extends Component {
       accesscode: this.props.route.params.accesscode,
       userProfile: this.props.route.params.userProfile,
       modalVisible: false,
-      allActivities: [],
+      allMeals: [],
+      addDate: "",
       addName: "",
-      addDuration: 0,
-      addCaloriesBurnt: 0,
-      addDate: 0,
     }
-    this.deleteActivity = this.deleteActivity.bind(this);
-    this.editActivity = this.editActivity.bind(this);
+    this.deleteMeal = this.deleteMeal.bind(this);
+    // this.editActivity = this.editActivity.bind(this);
   }
   componentDidMount() {
-    this.allActivities();
+    this.allMeals();
   }
   componentDidUpdate() {
-    // this.allActivities();
+    // this.allMeals();
   }
 
-  async allActivities() {
+  async allMeals() {
     var myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -40,24 +38,24 @@ class Exercises extends Component {
     };
 
     try {
-      let response = await fetch('https://cs571.cs.wisc.edu/activities', requestOptions)
+      let response = await fetch('https://cs571.cs.wisc.edu/meals', requestOptions)
       let res = await response.text();
       console.log(res);
-      let { activities } = JSON.parse(res);
+      let { meals } = JSON.parse(res);
+      console.log(meals);
+
       this.setState({
-        allActivities: activities,
+        allMeals: meals,
       });
     } catch (err) {
       // console.log(err);
     }
   };
 
-  async addActivity() {
+  async addMeals() {
     var raw = JSON.stringify({
       name: this.state.addName,
-      duration: this.state.addDuration,
       date: this.state.addDate,
-      calories: this.state.addCaloriesBurnt,
     });
 
     var myHeaders = new Headers();
@@ -72,19 +70,20 @@ class Exercises extends Component {
     };
 
     try {
-      let response = await fetch('https://cs571.cs.wisc.edu/activities', requestOptions)
+      let response = await fetch('https://cs571.cs.wisc.edu/meals', requestOptions)
       let res = await response.text();
-      // console.log(res);
+      console.log(res);
     } catch (err) {
       // console.log(err);
     }
-    this.allActivities();
+    this.allMeals();
   };
+
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
 
-  async deleteActivity(id) {
+  async deleteMeal(id) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("x-access-token", this.state.accesscode);
@@ -94,13 +93,13 @@ class Exercises extends Component {
       redirect: 'follow',
     };
     try {
-      let response = await fetch('https://cs571.cs.wisc.edu/activities/' + id, requestOptions)
+      let response = await fetch('https://cs571.cs.wisc.edu/meals/' + id, requestOptions)
       let res = await response.text();
       console.log(res);
     } catch (err) {
       console.log(err);
     }
-    this.allActivities();
+    this.allMeals();
   }
 
   async editActivity(id, name, calories, duration, date) {
@@ -122,33 +121,28 @@ class Exercises extends Component {
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
-    this.allActivities();
+    this.allMeals();
   }
 
   render() {
     const renderItem = ({ item }) => (
-      <Item title={item.title}
+      <Meal
         id={item.id}
         name={item.name}
-        calories={item.calories}
-        duration={item.duration}
         date={item.date}
+        deleteMeal={this.deleteMeal}
         userProfile={this.state.userProfile}
         accesscode={this.state.accesscode}
-        deleteActivity={this.deleteActivity}
-        editActivity={this.editActivity}
       />
     );
 
     return (
       <View style={styles.centeredView}>
-        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Exercises</Text>
-        <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Let's get to work!</Text>
-        <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Record your exercises below</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Meal</Text>
 
         <View style={styles.container}>
           <FlatList
-            data={this.state.allActivities}
+            data={this.state.allMeals}
             renderItem={renderItem}
             keyExtractor={item => item.id}
           />
@@ -164,41 +158,27 @@ class Exercises extends Component {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Exercise Details</Text>
-              <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Exercise Name</Text>
+              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Meal Details</Text>
+              <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Meal Name</Text>
               <TextInput style={styles.input} placeholder="Enter an input"
                 onChangeText={(text) => {
                   this.setState({ addName: text });
                 }} />
-              <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Duration (minutes)</Text>
-              <TextInput style={styles.input} placeholder="Enter an input"
-                keyboardType='numeric'
-                onChangeText={(text) => {
-                  this.setState({ addDuration: Number(text) });
-                }} />
-              <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Calories Burnt</Text>
-              <TextInput style={styles.input} placeholder="Enter an input"
-                keyboardType='numeric'
-                onChangeText={(text) => {
-                  this.setState({ addCaloriesBurnt: Number(text) });
-                }} />
-              <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Looks good! Ready to save your work?</Text>
+
 
               <Button
-                title="Save Exercise"
+                title="Save Meal"
                 onPress={async () => {
                   var date = await new Date();
                   var json = await JSON.stringify(date);
                   await this.setState({ addDate: json });
-                  await this.addActivity();
+                  await this.addMeals();
                   await this.setState({ addName: "" });
-                  await this.setState({ addDuration: 0 });
-                  await this.setState({ addCaloriesBurnt: 0 });
                   await this.setState({ addDate: "" });
                   await this.setState({ modalVisible: !this.state.modalVisible })
                   await Alert.alert(
-                    "Exercises",
-                    "Exercise added!",
+                    "Meal",
+                    "Meal added!",
                     [
                       { text: "OK" }
                     ]
@@ -215,7 +195,7 @@ class Exercises extends Component {
         </Modal>
 
         <Button
-          title="Add Exercise"
+          title="Add Meal"
           onPress={() => { this.setModalVisible(true) }}
         />
         <Button
@@ -225,20 +205,6 @@ class Exercises extends Component {
               index: 0,
               routes: [{ name: 'Login' }],
             });
-          }}
-        />
-        <Button
-          title="Meals"
-          onPress={() => {
-
-            this.props.navigation.navigate('Home', {
-              screen: 'Meals',
-              params: {
-                userProfile: this.state.userProfile,
-                accesscode: this.state.accesscode
-              }
-            });
-
           }}
         />
       </View>
@@ -300,4 +266,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Exercises;
+export default Meals;
