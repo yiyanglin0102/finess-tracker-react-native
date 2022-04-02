@@ -1,7 +1,5 @@
 import 'react-native-gesture-handler';
 import React, { Component } from "react";
-import Login from "./Login";
-import SignUp from "./SignUp";
 import Profile from "./Profile";
 import Exercises from "./Exercises";
 import Meals from "./Meals";

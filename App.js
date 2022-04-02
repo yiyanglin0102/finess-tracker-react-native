@@ -2,9 +2,6 @@ import 'react-native-gesture-handler';
 import React from "react";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import Profile from "./Profile";
-import Exercises from "./Exercises";
-import Meals from "./Meals";
 import Home from "./Home";
 
 import { NavigationContainer } from "@react-navigation/native";

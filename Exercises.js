@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Button, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
+import { Alert, Button, Modal, StyleSheet, Text, View, TextInput, FlatList, StatusBar } from "react-native";
 import Item from './Item';
 
 class Exercises extends Component {
@@ -225,20 +225,6 @@ class Exercises extends Component {
               index: 0,
               routes: [{ name: 'Login' }],
             });
-          }}
-        />
-        <Button
-          title="Meals"
-          onPress={() => {
-
-            this.props.navigation.navigate('Home', {
-              screen: 'Meals',
-              params: {
-                userProfile: this.state.userProfile,
-                accesscode: this.state.accesscode
-              }
-            });
-
           }}
         />
       </View>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Button, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
+import { Alert, Button, Modal, StyleSheet, Text, View, TextInput, FlatList, StatusBar } from "react-native";
 import Meal from './Meal';
 
 class Meals extends Component {

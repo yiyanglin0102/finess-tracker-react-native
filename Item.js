@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
+import { Button, Alert, Modal, StyleSheet, Text, View, TextInput, StatusBar } from "react-native";
 
 class Item extends Component {
     constructor(props) {

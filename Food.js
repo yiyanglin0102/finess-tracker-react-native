@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, FlatList, StatusBar } from "react-native";
+import { Button, Alert, Modal, StyleSheet, Text, View, TextInput, StatusBar } from "react-native";
 
 class Food extends Component {
     constructor(props) {
@@ -56,14 +56,12 @@ class Food extends Component {
                 <Text style={styles.title}>Carbohydrates: {this.state.carbohydrates}</Text>
                 <Text style={styles.title}>Fat: {this.state.fat}</Text>
                 <Text style={styles.title}>Protein: {this.state.protein}</Text>
-
                 <Button
                     title="Edit"
                     onPress={() => {
                         this.setModalVisible(true);
                     }}
                 />
-
                 <Button
                     title="Delete"
                     onPress={() => {
@@ -151,9 +149,6 @@ class Food extends Component {
 
 
                                     // connect to api
-
-                                    
-
                                     await this.props.editFoodinMeal(this.state.mealId, this.state.id, this.state.name, this.state.calories, this.state.carbohydrates, this.state.fat, this.state.protein);
                                     await this.setState({ modalVisible: !this.state.modalVisible })
                                     await Alert.alert(
