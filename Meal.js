@@ -202,6 +202,95 @@ class Item extends Component {
                                     keyExtractor={item => item.id}
                                 />
                             </View>
+                            {/* add blank food */}
+                            <Modal
+                                animationType="fade"
+                                transparent={true}
+                                visible={this.state.modalVisible1}
+                                onRequestClose={() => {
+                                    this.setModalVisible(!modalVisible1);
+                                }}
+                            >
+                                <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Food Name</Text>
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Enter an input"
+                                            onChangeText={(text) => {
+                                                this.setState({ addName: text });
+                                            }} />
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Calories</Text>
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Enter an input"
+                                            keyboardType='numeric'
+                                            onChangeText={(text) => {
+                                                this.setState({ addCalories: Number(text) });
+                                            }} />
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Carbohydrates</Text>
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Enter an input"
+                                            keyboardType='numeric'
+                                            onChangeText={(text) => {
+                                                this.setState({ addCarbohydrates: Number(text) });
+                                            }} />
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Fat</Text>
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Enter an input"
+                                            keyboardType='numeric'
+                                            onChangeText={(text) => {
+                                                this.setState({ addFat: Number(text) });
+                                            }} />
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Protein</Text>
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Enter an input"
+                                            keyboardType='numeric'
+                                            onChangeText={(text) => {
+                                                this.setState({ addProtein: Number(text) });
+                                            }} />
+
+                                        <Button
+                                            title="Add Food"
+                                            onPress={async () => {
+                                                // var date = await new Date();
+                                                // var json = await date.toISOString(); // date.toISOString
+                                                // await this.setState({ date: json });
+
+                                                await this.setState({ addName: this.state.addName });
+                                                await this.setState({ addCalories: this.state.addCalories });
+                                                await this.setState({ addCarbohydrates: this.state.addCarbohydrates });
+                                                await this.setState({ addFat: this.state.addFat });
+                                                await this.setState({ addProtein: this.state.addProtein });
+
+                                                // connect to api
+                                                await this.addFoodsOfMeal();
+                                                await this.setState({ modalVisible1: !this.state.modalVisible1 })
+                                                await this.setState({ addName: "" });
+                                                await this.setState({ addCalories: 0 });
+                                                await this.setState({ addCarbohydrates: 0 });
+                                                await this.setState({ addFat: 0 });
+                                                await this.setState({ addProtein: 0 });
+
+                                                await Alert.alert(
+                                                    "Add",
+                                                    "Food Added!",
+                                                    [
+                                                        { text: "OK" }
+                                                    ]
+                                                )
+                                            }}
+                                        />
+                                        <Button
+                                            title="Never Mind"
+                                            onPress={() => this.setState({ modalVisible1: !this.state.modalVisible1 })}
+                                        />
+                                    </View>
+                                </View>
+                            </Modal>
                             <Button
                                 title="Add"
                                 onPress={() => {
@@ -218,95 +307,7 @@ class Item extends Component {
                     </View>
                 </Modal>
 
-                {/* add blank food */}
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={this.state.modalVisible1}
-                    onRequestClose={() => {
-                        this.setModalVisible(!modalVisible1);
-                    }}
-                >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Food Name</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Enter an input"
-                                onChangeText={(text) => {
-                                    this.setState({ addName: text });
-                                }} />
-                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Calories</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Enter an input"
-                                keyboardType='numeric'
-                                onChangeText={(text) => {
-                                    this.setState({ addCalories: Number(text) });
-                                }} />
-                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Carbohydrates</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Enter an input"
-                                keyboardType='numeric'
-                                onChangeText={(text) => {
-                                    this.setState({ addCarbohydrates: Number(text) });
-                                }} />
-                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Fat</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Enter an input"
-                                keyboardType='numeric'
-                                onChangeText={(text) => {
-                                    this.setState({ addFat: Number(text) });
-                                }} />
-                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Protein</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Enter an input"
-                                keyboardType='numeric'
-                                onChangeText={(text) => {
-                                    this.setState({ addProtein: Number(text) });
-                                }} />
 
-                            <Button
-                                title="Add Food"
-                                onPress={async () => {
-                                    // var date = await new Date();
-                                    // var json = await date.toISOString(); // date.toISOString
-                                    // await this.setState({ date: json });
-
-                                    await this.setState({ addName: this.state.addName });
-                                    await this.setState({ addCalories: this.state.addCalories });
-                                    await this.setState({ addCarbohydrates: this.state.addCarbohydrates });
-                                    await this.setState({ addFat: this.state.addFat });
-                                    await this.setState({ addProtein: this.state.addProtein });
-
-                                    // connect to api
-                                    await this.addFoodsOfMeal();
-                                    await this.setState({ modalVisible1: !this.state.modalVisible1 })
-                                    await this.setState({ addName: "" });
-                                    await this.setState({ addCalories: 0 });
-                                    await this.setState({ addCarbohydrates: 0 });
-                                    await this.setState({ addFat: 0 });
-                                    await this.setState({ addProtein: 0 });
-
-                                    await Alert.alert(
-                                        "Add",
-                                        "Food Added!",
-                                        [
-                                            { text: "OK" }
-                                        ]
-                                    )
-                                }}
-                            />
-                            <Button
-                                title="Never Mind"
-                                onPress={() => this.setState({ modalVisible1: !this.state.modalVisible1 })}
-                            />
-                        </View>
-                    </View>
-                </Modal>
             </View>
         )
     }
