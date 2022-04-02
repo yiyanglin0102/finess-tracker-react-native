@@ -6,7 +6,7 @@ class Food extends Component {
         super(props);
         this.state = {
             name: this.props.name,
-            mealId: this.props.id,
+            mealId: this.props.mealId,
             id: this.props.id,
             calories: this.props.calories,
             carbohydrates: this.props.carbohydrates,
@@ -15,7 +15,7 @@ class Food extends Component {
             modalVisible: false,
 
             // userProfile: this.props.userProfile,
-            // accesscode: this.props.accesscode,
+            accesscode: this.props.accesscode,
             editName: this.props.name,
             editCalories: this.props.calories,
             editCarbohydrates: this.props.carbohydrates,
@@ -26,6 +26,25 @@ class Food extends Component {
 
     setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
+    }
+
+    async deleteFood(mealId, foodId) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("x-access-token", this.state.accesscode);
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+        try {
+            let response = await fetch('https://cs571.cs.wisc.edu/meals/' + mealId + '/foods/' + foodId, requestOptions)
+            let res = await response.text();
+            console.log(res);
+        } catch (err) {
+            console.log(err);
+        }
+        // this.allActivities();
     }
 
     render() {
@@ -50,7 +69,9 @@ class Food extends Component {
                     onPress={() => {
                         // this.props.deleteMeal(this.state.id);
                         // console.log(this.state.userProfile.username);
-                        // console.log("delete " + this.state.id);
+                        console.log("delete meal " + this.state.mealId);
+                        console.log("delete food " + this.state.id);
+                        this.props.deleteFood(this.state.mealId, this.state.id);
                         Alert.alert(
                             "Delete",
                             "Exercise deleted!",

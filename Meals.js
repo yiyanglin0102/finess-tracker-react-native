@@ -14,7 +14,7 @@ class Meals extends Component {
       modalVisible: false,
       allMeals: [],
       addDate: "",
-      addName: "",
+      addMealName: "",
     }
     this.deleteMeal = this.deleteMeal.bind(this);
     // this.editActivity = this.editActivity.bind(this);
@@ -54,7 +54,7 @@ class Meals extends Component {
 
   async addMeals() {
     var raw = JSON.stringify({
-      name: this.state.addName,
+      name: this.state.addMealName,
       date: this.state.addDate,
     });
 
@@ -162,7 +162,7 @@ class Meals extends Component {
               <Text style={{ fontSize: 10, fontWeight: 'bold' }}>Meal Name</Text>
               <TextInput style={styles.input} placeholder="Enter an input"
                 onChangeText={(text) => {
-                  this.setState({ addName: text });
+                  this.setState({ addMealName: text });
                 }} />
 
 
@@ -173,7 +173,7 @@ class Meals extends Component {
                   var json = await JSON.stringify(date);
                   await this.setState({ addDate: json });
                   await this.addMeals();
-                  await this.setState({ addName: "" });
+                  await this.setState({ addMealName: "" });
                   await this.setState({ addDate: "" });
                   await this.setState({ modalVisible: !this.state.modalVisible })
                   await Alert.alert(
