@@ -67,8 +67,6 @@ class Food extends Component {
                 <Button
                     title="Delete"
                     onPress={() => {
-                        // this.props.deleteMeal(this.state.id);
-                        // console.log(this.state.userProfile.username);
                         console.log("delete meal " + this.state.mealId);
                         console.log("delete food " + this.state.id);
                         this.props.deleteFood(this.state.mealId, this.state.id);
@@ -153,7 +151,10 @@ class Food extends Component {
 
 
                                     // connect to api
-                                    // await this.props.editActivity(this.state.id, this.state.name, this.state.calories, this.state.duration, this.state.date);
+
+                                    
+
+                                    await this.props.editFoodinMeal(this.state.mealId, this.state.id, this.state.name, this.state.calories, this.state.carbohydrates, this.state.fat, this.state.protein);
                                     await this.setState({ modalVisible: !this.state.modalVisible })
                                     await Alert.alert(
                                         "Edit",

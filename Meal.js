@@ -19,6 +19,7 @@ class Item extends Component {
             // protein: 0,
         }
         this.deleteFood = this.deleteFood.bind(this);
+        this.editFoodinMeal = this.editFoodinMeal.bind(this);
     }
 
     setModalVisible = (visible) => {
@@ -57,8 +58,6 @@ class Item extends Component {
             // console.log(err);
         }
     };
-
-
 
     async addFoodsOfMeal() {
         var raw = JSON.stringify({
@@ -114,6 +113,29 @@ class Item extends Component {
         this.getFoodsOfMeal();
     }
 
+    async editFoodinMeal(mealId, foodId, name, calories, carbohydrates, fat, protein) {
+        var requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': this.state.accesscode,
+            },
+            body: JSON.stringify({
+                name: name,
+                calories: calories,
+                carbohydrates: carbohydrates,
+                fat: fat,
+                protein: protein,
+            }),
+        };
+        await fetch('https://cs571.cs.wisc.edu/meals/' + mealId + '/foods/' + foodId, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        this.getFoodsOfMeal();
+    }
+
     render() {
 
         const renderItem = ({ item }) => (
@@ -127,6 +149,7 @@ class Item extends Component {
                 protein={item.protein}
                 accesscode={this.state.accesscode}
                 deleteFood={this.deleteFood}
+                editFoodinMeal={this.editFoodinMeal}
             />
         );
 
@@ -170,22 +193,6 @@ class Item extends Component {
                         <View style={styles.modalView}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Food Details</Text>
                             <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Food Name</Text>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             <View style={styles.container}>
                                 <FlatList
                                     data={this.state.foodDetails}
