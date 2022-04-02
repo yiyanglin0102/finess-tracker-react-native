@@ -96,6 +96,16 @@ class Login extends React.Component {
                 }).then(() => {
                   if (this.state.showProfile) {
                     this.props.navigation.navigate('Home', {
+                      screen: 'Meals',
+                      params: {
+                        userProfile: this.state.userProfile,
+                        accesscode: this.state.accesscode
+                      }
+                    })
+                  }
+                }).then(() => {
+                  if (this.state.showProfile) {
+                    this.props.navigation.navigate('Home', {
                       screen: 'Profile',
                       params: {
                         userProfile: this.state.userProfile,

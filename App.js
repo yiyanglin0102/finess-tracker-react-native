@@ -5,6 +5,7 @@ import SignUp from "./SignUp";
 import Profile from "./Profile";
 import Exercises from "./Exercises";
 import Meals from "./Meals";
+import Home from "./Home";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,36 +16,6 @@ const Stack = createStackNavigator(); // Stack Navigator (https://reactnavigatio
 // const Drawer = createDrawerNavigator(); // Drawer Navigator (https://reactnavigation.org/docs/drawer-navigator)
 const Tab = createBottomTabNavigator(); // Bottom Tabs Navigator (https://reactnavigation.org/docs/tab-based-navigation)
 
-function Home() {
-  return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-      // initialParams={{
-      //   userProfile: this.state.userProfile,
-      //   accesscode: this.state.accesscode,
-      // }}
-      />
-      <Tab.Screen
-        name="Exercises"
-        component={Exercises}
-      // initialParams={{
-      //   userProfile: this.state.userProfile,
-      //   accesscode: this.state.accesscode,
-      // }}
-      />
-       <Tab.Screen
-        name="Meals"
-        component={Meals}
-      // initialParams={{
-      //   userProfile: this.state.userProfile,
-      //   accesscode: this.state.accesscode,
-      // }}
-      />
-    </Tab.Navigator>
-  );
-}
 
 function StackNavigator() {
   return (
