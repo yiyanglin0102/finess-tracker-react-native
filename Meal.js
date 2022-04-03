@@ -13,6 +13,7 @@ class Item extends Component {
             accesscode: this.props.accesscode,
             modalVisible: false,
             modalVisible1: false,
+            modalVisible2: false,
             foodDetails: [],
             addName: 0,
             addCalories: 0,
@@ -21,6 +22,10 @@ class Item extends Component {
             addProtein: 0,
             chosenDate: new Date(),
             dateVisible: false,
+            totalCalories: 0,
+            totalCarbohydrates: 0,
+            totalFat: 0,
+            totalProtein: 0,
         }
         this.setDate = this.setDate.bind(this);
         this.deleteFood = this.deleteFood.bind(this);
@@ -165,7 +170,16 @@ class Item extends Component {
         this.setState({ date: this.state.chosenDate });
         await this.getFoodsOfMeal();
     }
-
+    showTotal() {
+        const caloriesSum = this.state.foodDetails.map(item => item.calories).reduce((prev, curr) => prev + curr, 0);
+        this.setState({ totalCalories: caloriesSum });
+        const carbohydratesSum = this.state.foodDetails.map(item => item.carbohydrates).reduce((prev, curr) => prev + curr, 0);
+        this.setState({ totalCarbohydrates: carbohydratesSum });
+        const fatSum = this.state.foodDetails.map(item => item.fat).reduce((prev, curr) => prev + curr, 0);
+        this.setState({ totalFat: fatSum });
+        const proteinSum = this.state.foodDetails.map(item => item.protein).reduce((prev, curr) => prev + curr, 0);
+        this.setState({ totalProtein: proteinSum });
+    }
     render() {
 
         const renderItem = ({ item }) => (
@@ -235,7 +249,40 @@ class Item extends Component {
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Food Details</Text>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Food Name</Text>
+                            <Button
+                                title="Total Consumption"
+                                onPress={() => {
+                                    this.showTotal();
+                                    this.setState({ modalVisible2: !this.state.modalVisible2 });
+                                }}
+                            />
+                            <Modal
+                                animationType="fade"
+                                visible={this.state.modalVisible2}
+                                onRequestClose={() => {
+                                    this.setModalVisible(!modalVisible2);
+                                }}
+                            >
+                                <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+                                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Total Consumption</Text>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Total Calories</Text>
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{this.state.totalCalories}</Text>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Total Carbohydrates</Text>
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{this.state.totalCarbohydrates}</Text>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Total Fat</Text>
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{this.state.totalFat}</Text>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Total Protein</Text>
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{this.state.totalProtein}</Text>
+                                        <Button
+                                            title="Close"
+                                            onPress={() => {
+                                                this.setState({ modalVisible2: !this.state.modalVisible2 });
+                                            }}
+                                        />
+                                    </View>
+                                </View>
+                            </Modal>
                             <View style={styles.container}>
                                 <FlatList
                                     data={this.state.foodDetails}
