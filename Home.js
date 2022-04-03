@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Profile from "./Profile";
 import Exercises from "./Exercises";
 import Meals from "./Meals";
+import Today from "./Today";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,16 @@ class Home extends Component {
             accesscode: this.state.accesscode,
           }}
         />
+        <Tab.Screen
+          name="Today"
+          component={Today}
+          initialParams={{
+            userProfile: this.state.userProfile,
+            accesscode: this.state.accesscode,
+          }}
+        />
       </Tab.Navigator>
+
     );
   }
 }

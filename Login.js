@@ -113,6 +113,16 @@ class Login extends React.Component {
                       }
                     })
                   }
+                }).then(() => {
+                  if (this.state.showProfile) {
+                    this.props.navigation.navigate('Home', {
+                      screen: 'Today',
+                      params: {
+                        userProfile: this.state.userProfile,
+                        accesscode: this.state.accesscode
+                      }
+                    })
+                  }
                 });
               }}
             />
