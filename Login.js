@@ -106,7 +106,7 @@ class Login extends React.Component {
                 }).then(() => {
                   if (this.state.showProfile) {
                     this.props.navigation.navigate('Home', {
-                      screen: 'Profile',
+                      screen: 'Today',
                       params: {
                         userProfile: this.state.userProfile,
                         accesscode: this.state.accesscode
@@ -116,7 +116,7 @@ class Login extends React.Component {
                 }).then(() => {
                   if (this.state.showProfile) {
                     this.props.navigation.navigate('Home', {
-                      screen: 'Today',
+                      screen: 'Profile',
                       params: {
                         userProfile: this.state.userProfile,
                         accesscode: this.state.accesscode
@@ -129,11 +129,6 @@ class Login extends React.Component {
             <Button
               title="Sign Up"
               onPress={() => this.props.navigation.navigate('SignUp'
-              )}
-            />
-            <Button
-              title="Test"
-              onPress={() => this.props.navigation.navigate('Test'
               )}
             />
           </View>
