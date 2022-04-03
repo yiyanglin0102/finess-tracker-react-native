@@ -199,8 +199,8 @@ class Item extends Component {
 
         return (
             <View style={styles.item}>
-                <Text style={styles.title}>Name: {this.state.name}</Text>
-                <Text style={styles.title}>ID: {this.state.mealId}</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{this.state.name}</Text>
+                {/* <Text style={styles.title}>ID: {this.state.mealId}</Text> */}
                 <Text style={styles.title}>Date: {this.setDate(this.state.date.toLocaleString('en-US', { timeZone: 'America/Chicago' }))}</Text>
                 <View style={styles.container}>
                     <Button

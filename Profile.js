@@ -65,7 +65,7 @@ class Profile extends React.Component {
     return (
       <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
-          <Text style={styles.title}>About Me:</Text>
+          <Text style={styles.title}>About Me</Text>
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Personal Information</Text>
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>First Name</Text>
           <TextInput style={styles.input}

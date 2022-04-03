@@ -51,8 +51,8 @@ class Food extends Component {
     render() {
         return (
             <View style={styles.item}>
-                <Text style={styles.title}>Name: {this.state.name}</Text>
-                <Text style={styles.title}>ID: {this.state.id}</Text>
+                <Text style={styles.title}>{this.state.name}</Text>
+                {/* <Text style={styles.title}>ID: {this.state.id}</Text> */}
                 <Text style={styles.title}>Calories: {this.state.calories}</Text>
                 <Text style={styles.title}>Carbohydrates: {this.state.carbohydrates}</Text>
                 <Text style={styles.title}>Fat: {this.state.fat}</Text>
@@ -71,7 +71,7 @@ class Food extends Component {
                         this.props.deleteFood(this.state.mealId, this.state.id);
                         Alert.alert(
                             "Delete",
-                            "Exercise deleted!",
+                            "Food deleted!",
                             [
                                 { text: "OK" }
                             ]

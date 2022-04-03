@@ -34,8 +34,8 @@ class Item extends Component {
     render() {
         return (
             <View style={styles.item}>
-                <Text style={styles.title}>Name: {this.state.name}</Text>
-                <Text style={styles.title}>ID: {this.state.id}</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{this.state.name}</Text>
+                {/* <Text style={styles.title}>ID: {this.state.id}</Text> */}
                 <Text style={styles.title}>Calories: {this.state.calories}</Text>
                 <Text style={styles.title}>Duration: {this.state.duration}</Text>
                 {/* <Text style={styles.title}>Date: {new Date(this.state.date).toString()}</Text> */}

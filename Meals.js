@@ -138,7 +138,7 @@ class Meals extends Component {
 
     return (
       <View style={styles.centeredView}>
-        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Meal</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Meals</Text>
 
         <View style={styles.container}>
           <FlatList
