@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Alert, Modal, StyleSheet, Text, View, TextInput, StatusBar } from "react-native";
+import { DatePickerIOS, Button, Alert, Modal, StyleSheet, Text, View, TextInput, StatusBar } from "react-native";
 
 class Food extends Component {
     constructor(props) {
@@ -21,6 +21,7 @@ class Food extends Component {
             editCarbohydrates: this.props.carbohydrates,
             editFat: this.props.fat,
             editProtein: this.props.protein,
+
         }
     }
 
@@ -132,7 +133,6 @@ class Food extends Component {
                                 onChangeText={(text) => {
                                     this.setState({ editProtein: Number(text) });
                                 }} />
-
                             <Button
                                 title="Save Food"
                                 onPress={async () => {
@@ -160,6 +160,7 @@ class Food extends Component {
                                     )
                                 }}
                             />
+
                             <Button
                                 title="Never Mind"
                                 onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}
@@ -169,7 +170,6 @@ class Food extends Component {
                     </View>
 
                 </Modal>
-
 
             </View>
         )

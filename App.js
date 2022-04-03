@@ -3,6 +3,7 @@ import React from "react";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Home from "./Home";
+import Test from "./Test";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -22,6 +23,8 @@ function StackNavigator() {
       <Stack.Screen name="SignUp" component={SignUp}>
       </Stack.Screen>
       <Stack.Screen name="Home" component={Home}>
+      </Stack.Screen>
+      <Stack.Screen name="Test" component={Test}>
       </Stack.Screen>
     </Stack.Navigator>
   );

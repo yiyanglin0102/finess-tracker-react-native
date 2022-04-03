@@ -121,6 +121,11 @@ class Login extends React.Component {
               onPress={() => this.props.navigation.navigate('SignUp'
               )}
             />
+            <Button
+              title="Test"
+              onPress={() => this.props.navigation.navigate('Test'
+              )}
+            />
           </View>
         </View>
       </ScrollView>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Alert, Modal, StyleSheet, Text, View, TextInput, FlatList, StatusBar } from "react-native";
+import { DatePickerIOS, Button, Alert, Modal, StyleSheet, Text, View, TextInput, FlatList, StatusBar } from "react-native";
 import Food from './Food';
 
 class Item extends Component {
@@ -19,11 +19,19 @@ class Item extends Component {
             addCarbohydrates: 0,
             addFat: 0,
             addProtein: 0,
+            chosenDate: new Date(),
+            dateVisible: false,
         }
+        this.setDate = this.setDate.bind(this);
         this.deleteFood = this.deleteFood.bind(this);
         this.editFoodinMeal = this.editFoodinMeal.bind(this);
     }
-
+    setDate(newDate) {
+        this.setState({ chosenDate: newDate });
+        // this.getFoodsOfMeal();
+        console.log(this.state.chosenDate);
+        console.log(this.state.mealId);
+    }
     setModalVisible = (visible) => {
         this.setState({ modalVisible: visible });
     }
@@ -135,7 +143,27 @@ class Item extends Component {
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-        this.getFoodsOfMeal();
+        await this.getFoodsOfMeal();
+    }
+
+    async editMealDate() {
+        var requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': this.state.accesscode,
+            },
+            body: JSON.stringify({
+                date: this.state.chosenDate
+            }),
+        };
+        await fetch('https://cs571.cs.wisc.edu/meals/' + this.state.mealId, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        this.setState({ date: this.state.chosenDate });
+        await this.getFoodsOfMeal();
     }
 
     render() {
@@ -157,9 +185,22 @@ class Item extends Component {
 
         return (
             <View style={styles.item}>
-                <Text style={styles.title}>Food Name: {this.state.name}</Text>
+                <Text style={styles.title}>Name: {this.state.name}</Text>
                 <Text style={styles.title}>ID: {this.state.mealId}</Text>
                 <Text style={styles.title}>Date: {this.setDate(this.state.date.toLocaleString('en-US', { timeZone: 'America/Chicago' }))}</Text>
+                <View style={styles.container}>
+                    <Button
+                        title={this.state.dateVisible ? "Collapse" : "Change Date"}
+                        onPress={() => this.setState({ dateVisible: !this.state.dateVisible })}
+                    />
+                    {this.state.dateVisible && <DatePickerIOS
+                        date={this.state.chosenDate}
+                        onDateChange={async (date) => {
+                            await this.setState({ chosenDate: date });
+                            await this.editMealDate();
+                        }}
+                    />}
+                </View>
                 <Button
                     title="Show All Foods"
                     onPress={async () => {
@@ -176,7 +217,7 @@ class Item extends Component {
                         console.log("delete " + this.state.mealId);
                         Alert.alert(
                             "Delete",
-                            "Exercise deleted!",
+                            "Meal deleted!",
                             [
                                 { text: "OK" }
                             ]
@@ -306,8 +347,6 @@ class Item extends Component {
                         </View>
                     </View>
                 </Modal>
-
-
             </View>
         )
     }
