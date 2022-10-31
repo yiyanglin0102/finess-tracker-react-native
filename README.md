@@ -4,4 +4,4 @@
 
 # Project Summary
 
-This project is meant to introduce React Native, Expo, and the basics of using RESTful APIs, pecifically, building essential screens for a fitness tracking application.
+This project is meant to introduce React Native, Expo, and the basics of using RESTful APIs, specifically, building essential screens for a fitness tracking application.
